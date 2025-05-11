@@ -75,7 +75,8 @@ const RanksPanel: React.FC<RanksPanelProps> = ({ ranks, onUpdateRanks }) => {
         </div>
 
         {/* Edit Modal */}
-        {editingRank && (
+        {/* {editingRank && ( ... dein Modal ... )} */}
+
           <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
             <div className="bg-zinc-800 rounded-lg p-6 w-full max-w-md border border-zinc-600 animate-scaleIn">
               <div className="flex justify-between items-center mb-4">
