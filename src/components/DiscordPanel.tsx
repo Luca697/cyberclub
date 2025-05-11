@@ -60,7 +60,7 @@ const DiscordPanel: React.FC = () => {
                   <div>
                     <h4 className="text-white font-medium">Events</h4>
                     <p className="text-gray-400 text-sm">
-                      Nimm an Voice-Chats und Community-Events teil
+                      Nimm an Voice-Chats und Community-Events teil.
                     </p>
                   </div>
                 </div>
