@@ -7,7 +7,7 @@ export interface ServerConfig {
 export const defaultConfig: ServerConfig = {
   maintenance: true,
   serverStatus: 'online',
-  maintenanceMessage: 'Unser Server wird aktuell gewartet. Wir sind bald wieder für euch da!',
+  maintenanceMessage: 'Unserere Website wird gerade umgebaut. Wir sind bald wieder da',
 };
 
 // Simuliere das Laden der Konfiguration
