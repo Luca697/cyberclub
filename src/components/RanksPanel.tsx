@@ -8,10 +8,7 @@ interface RanksPanelProps {
 }
 
 const RanksPanel: React.FC<RanksPanelProps> = ({ ranks, onUpdateRanks }) => {
-  const [editMode, setEditMode] = useState(false);
-  const [editingRank, setEditingRank] = useState<RankAdvantage | null>(null);
-  const [editedBenefits, setEditedBenefits] = useState<string[]>([]);
-
+      
   const getIconComponent = (iconName: string) => {
     switch (iconName) {
       case 'Shield':
@@ -27,47 +24,7 @@ const RanksPanel: React.FC<RanksPanelProps> = ({ ranks, onUpdateRanks }) => {
     }
   };
 
-  const handleEditRank = (rank: RankAdvantage) => {
-    setEditingRank(rank);
-    setEditedBenefits([...rank.benefits]);
-    setEditMode(true);
-  };
-
-  const handleSaveRank = () => {
-    if (editingRank) {
-      const updatedRanks = ranks.map((rank) =>
-        rank.id === editingRank.id
-          ? { ...rank, benefits: editedBenefits }
-          : rank
-      );
-      onUpdateRanks(updatedRanks);
-      setEditMode(false);
-      setEditingRank(null);
-    }
-  };
-
-  const handleCancelEdit = () => {
-    setEditMode(false);
-    setEditingRank(null);
-  };
-
-  const handleAddBenefit = () => {
-    setEditedBenefits([...editedBenefits, '']);
-  };
-
-  const handleUpdateBenefit = (index: number, value: string) => {
-    const updatedBenefits = [...editedBenefits];
-    updatedBenefits[index] = value;
-    setEditedBenefits(updatedBenefits);
-  };
-
-  const handleRemoveBenefit = (index: number) => {
-    const updatedBenefits = [...editedBenefits];
-    updatedBenefits.splice(index, 1);
-    setEditedBenefits(updatedBenefits);
-  };
-
-  return (
+              return (
     <section
       id="ranks"
       className="min-h-screen py-24 px-4 flex items-center bg-gradient-to-b from-zinc-800 to-zinc-900"
@@ -95,15 +52,6 @@ const RanksPanel: React.FC<RanksPanelProps> = ({ ranks, onUpdateRanks }) => {
                 boxShadow: `0 4px 20px rgba(0, 0, 0, 0.2), 0 0 0 1px ${rank.color}20`,
               }}
             >
-              <div className="absolute -right-2 -top-2">
-                <button
-                  onClick={() => handleEditRank(rank)}
-                  className="bg-zinc-700 p-2 rounded-full text-zinc-300 hover:bg-purple-600 hover:text-white transition-colors duration-300 opacity-0 group-hover:opacity-100"
-                >
-                  <Edit2 size={14} />
-                </button>
-              </div>
-
               <div
                 className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-4"
                 style={{ backgroundColor: `${rank.color}20`, color: rank.color }}
