@@ -91,7 +91,7 @@ const ServerStatusPanel: React.FC = () => {
       <div className="container mx-auto relative">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Server <span className="text-green-500">Status</span>
+            Server <span className="text-green-500">Status Beta</span>
           </h2>
           <div className="h-1 w-24 bg-green-500 mx-auto mb-6"></div>
           <p className="text-gray-300 max-w-2xl mx-auto">

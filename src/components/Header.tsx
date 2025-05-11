@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange }) => {
   const sections = [
     { id: 'news', label: 'Neuigkeiten', icon: Newspaper },
     { id: 'ranks', label: 'Ränge', icon: Users },
-    { id: 'status', label: 'Server Status (BETA)', icon: Activity },
+    { id: 'status', label: 'Server Status (FAKE)', icon: Activity },
     { id: 'discord', label: 'Discord', icon: MessageSquare },
   ];
 
