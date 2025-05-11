@@ -24,7 +24,7 @@ const MaintenanceOverlay: React.FC<MaintenanceOverlayProps> = ({ config }) => {
             rel="noopener noreferrer"
             className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-all duration-300 flex items-center space-x-2"
           >
-            <span>Discord beitreten</span>
+            <span>Discord beitreten.</span>
           </a>
         </div>
       </div>
