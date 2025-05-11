@@ -9,10 +9,7 @@ interface RanksPanelProps {
 
 const RanksPanel: React.FC<RanksPanelProps> = ({ ranks, onUpdateRanks }) => {
   // State für Editmodus
-  const [editMode, setEditMode] = useState(false);
-  const [editingRank, setEditingRank] = useState<RankAdvantage | null>(null);
-  const [editedBenefits, setEditedBenefits] = useState<string[]>([]);
-
+      
   // Hilfsfunktion: Icon-Komponente anhand des Namens zurückgeben
   const getIconComponent = (iconName: string) => {
     switch (iconName) {
@@ -36,38 +33,7 @@ const RanksPanel: React.FC<RanksPanelProps> = ({ ranks, onUpdateRanks }) => {
     setEditedBenefits([...rank.benefits]);
   };
 
-  const handleCancelEdit = () => {
-    setEditMode(false);
-    setEditingRank(null);
-    setEditedBenefits([]);
-  };
-
-  const handleAddBenefit = () => {
-    setEditedBenefits(prev => [...prev, '']);
-  };
-
-  const handleUpdateBenefit = (index: number, value: string) => {
-    setEditedBenefits(prev => {
-      const copy = [...prev];
-      copy[index] = value;
-      return copy;
-    });
-  };
-
-  const handleRemoveBenefit = (index: number) => {
-    setEditedBenefits(prev => prev.filter((_, i) => i !== index));
-  };
-
-  const handleSaveRank = () => {
-    if (!editingRank) return;
-    const updated = ranks.map(r =>
-      r.id === editingRank.id ? { ...r, benefits: editedBenefits } : r
-    );
-    onUpdateRanks(updated);
-    handleCancelEdit();
-  };
-
-  return (
+            return (
     <section
       id="ranks"
       className="min-h-screen py-24 px-4 flex items-center bg-gradient-to-b from-zinc-800 to-zinc-900"
