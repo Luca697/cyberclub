@@ -92,7 +92,7 @@ const DiscordPanel: React.FC = () => {
                 Klicke auf den Button, um direkt zu unserem Discord-Server zu gelangen
               </p>
               <a
-                href="https://discord.gg/cyberclub"
+                href="https://discord.gg/Bde6Az8ZgS"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center space-x-2"
