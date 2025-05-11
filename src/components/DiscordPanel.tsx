@@ -112,10 +112,10 @@ const DiscordPanel: React.FC = () => {
           <p>
             Bei Fragen oder Problemen kannst du uns auch per E-Mail kontaktieren:{' '}
             <a
-              href="mailto:contact@cyberclub-mc.de"
+              href=""
               className="text-indigo-400 hover:text-indigo-300 underline"
             >
-              contact@cyberclub-mc.de
+              
             </a>
           </p>
         </div>
