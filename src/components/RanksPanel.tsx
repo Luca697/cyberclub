@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { RankAdvantage } from '../types';
-import { Shield, BadgeCheck, Crown, Zap, Edit2, Save, X } from 'lucide-react';
+import { Shield, BadgeCheck, Crown, Zap, Edit2 } from 'lucide-react';
 
 interface RanksPanelProps {
   ranks: RankAdvantage[];
   onUpdateRanks: (updatedRanks: RankAdvantage[]) => void;
 }
 
-const RanksPanel: React.FC<RanksPanelProps> = ({ ranks, onUpdateRanks }) => {
-  // State für Editmodus
-      
-  // Hilfsfunktion: Icon-Komponente anhand des Namens zurückgeben
+const RanksPanel: React.FC<RanksPanelProps> = ({ ranks }) => {
   const getIconComponent = (iconName: string) => {
     switch (iconName) {
       case 'Shield':
@@ -26,14 +23,7 @@ const RanksPanel: React.FC<RanksPanelProps> = ({ ranks, onUpdateRanks }) => {
     }
   };
 
-  // Edit-Handler
-  const handleStartEdit = (rank: RankAdvantage) => {
-    setEditMode(true);
-    setEditingRank(rank);
-    setEditedBenefits([...rank.benefits]);
-  };
-
-            return (
+  return (
     <section
       id="ranks"
       className="min-h-screen py-24 px-4 flex items-center bg-gradient-to-b from-zinc-800 to-zinc-900"
@@ -81,7 +71,7 @@ const RanksPanel: React.FC<RanksPanelProps> = ({ ranks, onUpdateRanks }) => {
               </div>
 
               <button
-                onClick={() => handleStartEdit(rank)}
+                onClick={() => console.log('Bearbeiten geklickt')}
                 className="absolute top-4 right-4 text-gray-400 hover:text-white"
               >
                 <Edit2 size={20} />
@@ -89,64 +79,6 @@ const RanksPanel: React.FC<RanksPanelProps> = ({ ranks, onUpdateRanks }) => {
             </div>
           ))}
         </div>
-
-        {/* Edit Modal */}
-        {editMode && editingRank && (
-          <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-            <div className="bg-zinc-800 rounded-lg p-6 w-full max-w-md border border-zinc-600 animate-scaleIn">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold text-white">
-                  Rang bearbeiten: {editingRank.name}
-                </h3>
-                <button
-                  onClick={handleCancelEdit}
-                  className="text-gray-400 hover:text-white"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-
-              <div className="space-y-4 mb-4">
-                <p className="text-sm text-gray-300">
-                  Bearbeite die Vorteile dieses Ranges. Füge neue hinzu oder entferne bestehende.
-                </p>
-
-                {editedBenefits.map((benefit, index) => (
-                  <div key={index} className="flex items-center">
-                    <input
-                      type="text"
-                      value={benefit}
-                      onChange={e => handleUpdateBenefit(index, e.target.value)}
-                      className="flex-1 bg-zinc-700 border border-zinc-600 rounded px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    />
-                    <button
-                      onClick={() => handleRemoveBenefit(index)}
-                      className="ml-2 text-red-400 hover:text-red-300"
-                    >
-                      <X size={18} />
-                    </button>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex gap-2">
-                <button
-                  onClick={handleAddBenefit}
-                  className="px-4 py-2 bg-zinc-700 text-white rounded hover:bg-zinc-600 transition-colors duration-200"
-                >
-                  Vorteil hinzufügen
-                </button>
-                <button
-                  onClick={handleSaveRank}
-                  className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-500 transition-colors duration-200 flex items-center"
-                >
-                  <Save size={16} className="mr-2" />
-                  Speichern
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );
