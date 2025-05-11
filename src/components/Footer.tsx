@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
               </span>
             </div>
             <p className="text-gray-400 text-sm mt-2">
-              Der beste Ort für dein Minecraft-Abenteuer
+              Erstellt von CyberLucx_
             </p>
           </div>
 
@@ -40,7 +40,7 @@ const Footer: React.FC = () => {
                 </svg>
               </a>
               <a
-                href="https://discord.gg/cyberclub"
+                href="https://discord.gg/P4bQ8Jcx"
                 className="text-gray-400 hover:text-white transition-colors duration-200"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

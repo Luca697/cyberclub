@@ -95,8 +95,7 @@ const ServerStatusPanel: React.FC = () => {
           </h2>
           <div className="h-1 w-24 bg-green-500 mx-auto mb-6"></div>
           <p className="text-gray-300 max-w-2xl mx-auto">
-            Echtzeitüberwachung unseres Minecraft-Servers. Hier siehst du aktuelle Spielerzahlen,
-            Performance-Metriken und mehr.
+            Das ist nicht der reale Server Status, diese Funktion ist noch in Arbeit.
           </p>
         </div>
 
