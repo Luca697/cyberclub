@@ -110,7 +110,7 @@ const ServerStatusPanel: React.FC = () => {
               </span>
             </div>
             <h3 className="text-lg font-semibold text-white mb-1">Spieler Online</h3>
-            <p className="text-gray-400 text-sm">Aktive Spieler auf dem Server</p>
+            <p className="text-gray-400 text-sm">Aktuell ist das nicht real. Bald kommt es.</p>
           </div>
 
           <div className="bg-zinc-800/60 rounded-lg p-6 border border-zinc-700 hover:border-purple-500/50 transition-all duration-300 transform hover:scale-105 hover:shadow-xl group">
