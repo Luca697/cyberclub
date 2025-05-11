@@ -19,7 +19,7 @@ const MaintenanceOverlay: React.FC<MaintenanceOverlayProps> = ({ config }) => {
         <p className="text-xl text-gray-300 mb-8">{config.maintenanceMessage}</p>
         <div className="flex items-center justify-center space-x-4">
           <a
-            href="https://discord.gg/cyberclub"
+            href="https://discord.gg/Bde6Az8ZgS"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-all duration-300 flex items-center space-x-2"
