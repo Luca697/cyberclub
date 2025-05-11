@@ -79,5 +79,7 @@ export const rankAdvantages: RankAdvantage[] = [
     ],
     color: '#e84118',
     icon: 'Zap',
+    
+    
   },
 ];
