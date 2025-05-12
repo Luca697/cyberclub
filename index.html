@@ -15,3 +15,18 @@
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
+
+<script>
+  document.addEventListener('contextmenu', event => event.preventDefault());
+</script>
+
+<script>
+  document.onkeydown = function(e) {
+    if (e.key === "F12" || 
+        (e.ctrlKey && e.shiftKey && e.key === "I") || 
+        (e.ctrlKey && e.shiftKey && e.key === "J") || 
+        (e.ctrlKey && e.key === "U")) {
+      return false;
+    }
+  };
+</script>
