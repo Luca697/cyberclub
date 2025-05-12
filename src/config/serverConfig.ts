@@ -4,13 +4,21 @@ export interface ServerConfig {
   maintenanceMessage: string;
 }
 
+// Hier kannst du den Server-Status direkt ändern
 export const defaultConfig: ServerConfig = {
-  maintenance: false,
-  serverStatus: 'online',
-  maintenanceMessage: 'Unserere Website wird gerade umgebaut. Wir sind bald wieder da',
+  // Ändere maintenance auf true wenn der Server in Wartung ist
+  maintenance: true,
+  
+  // Ändere den serverStatus zu:
+  // - 'online' für Online
+  // - 'offline' für Offline
+  // - 'maintenance' für Wartung
+  serverStatus: 'offline',
+  
+  // Die Nachricht die angezeigt wird wenn der Server in Wartung ist
+  maintenanceMessage: 'Unser Server wird aktuell gewartet. Wir sind bald wieder für euch da!',
 };
 
-// Simuliere das Laden der Konfiguration
 let currentConfig: ServerConfig = { ...defaultConfig };
 
 export const getServerConfig = (): ServerConfig => {

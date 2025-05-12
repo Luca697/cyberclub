@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Users, Activity, Newspaper, MessageSquare } from 'lucide-react';
+import { Menu, X, Users, Activity, Newspaper, MessageSquare, Crown } from 'lucide-react';
 
 interface HeaderProps {
   activeSection: string;
@@ -22,7 +22,8 @@ const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange }) => {
   const sections = [
     { id: 'news', label: 'Neuigkeiten', icon: Newspaper },
     { id: 'ranks', label: 'Ränge', icon: Users },
-    { id: 'status', label: 'Server Status (FAKE)', icon: Activity },
+    { id: 'team', label: 'Team', icon: Crown },
+    { id: 'status', label: 'Server Status', icon: Activity },
     { id: 'discord', label: 'Discord', icon: MessageSquare },
   ];
 
