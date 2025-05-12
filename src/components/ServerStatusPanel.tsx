@@ -4,7 +4,7 @@ import { getServerConfig } from '../config/serverConfig';
 
 const ServerStatusPanel: React.FC = () => {
   const [playerCount, setPlayerCount] = useState(42);
-  const [uptime, setUptime] = useState('99.9%');
+  const [uptime, setUptime] = useState('0%');
   const [tps, setTps] = useState(20.0);
   const [ping, setPing] = useState(12);
   const config = getServerConfig();
