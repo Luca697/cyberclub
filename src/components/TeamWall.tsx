@@ -14,19 +14,19 @@ const TeamWall: React.FC = () => {
 
   const teamMembers: TeamMember[] = [
     // Owners
-    { name: "CyberMaster", role: "Owner", uuid: "853c80ef3c3749fdaa49938b674adae6", description: "Gründer & Hauptentwickler" },
-    { name: "TechLord", role: "Owner", uuid: "853c80ef3c3749fdaa49938b674adae6", description: "Server-Infrastruktur & Management" },
+    { name: "CyberLucx_", role: "Owner", uuid: "9e1bb8282f804a73930e5d463bef82da", description: "Gründer & Hauptentwickler" },
+    { name: "MrJulien", role: "Owner", uuid: "a796502a2f5e4bfba8a7d6628add21d8", description: "Server-Infrastruktur & Management" },
     
     // Admins
-    { name: "GameGuardian", role: "Admin", uuid: "853c80ef3c3749fdaa49938b674adae6", description: "Community Management" },
-    { name: "WorldWizard", role: "Admin", uuid: "853c80ef3c3749fdaa49938b674adae6", description: "Event-Koordinator" },
-    { name: "PixelPro", role: "Admin", uuid: "853c80ef3c3749fdaa49938b674adae6", description: "Support & Moderation" },
+    { name: "CyberAlex0815", role: "Admin", uuid: "5ed08ed38d8c4eec9789a8779a73cf92", description: "Developer/Leitung" },
+    { name: "CyberKnightt", role: "Admin", uuid: "56e95876fef246fa8f115c14bb623231", description: "Moderator-Leitung" },
+    { name: "PinguinboyMoppi", role: "Admin", uuid: "3bf024fee85b404eb8011932306cc803", description: "Team Leitung" },
     
     // Developer
-    { name: "CodeCrafter", role: "Developer", uuid: "853c80ef3c3749fdaa49938b674adae6", description: "Plugin-Entwicklung" },
+    { name: "MarleyN11", role: "Developer", uuid: "08497efa6f234ba5980348ff1a11d1af", description: "Plugin-Entwicklung" },
     
     // Moderator
-    { name: "SafeKeeper", role: "Moderator", uuid: "853c80ef3c3749fdaa49938b674adae6", description: "Community Moderation" },
+    { name: "Tray_ofKill", role: "Moderator", uuid: "71ae9f6c0b28497086579b7c53b8e9bc", description: "Community Moderation" },
   ];
 
   useEffect(() => {
@@ -63,11 +63,11 @@ const TeamWall: React.FC = () => {
   const getRoleIcon = (role: string) => {
     switch (role) {
       case 'Owner':
-        return <Crown className="w-6 h-6 text-yellow-500" />;
+        return <Crown className="w-6 h-6 text-red-500" />;
       case 'Admin':
         return <Shield className="w-6 h-6 text-red-500" />;
       case 'Developer':
-        return <Code className="w-6 h-6 text-blue-500" />;
+        return <Code className="w-6 h-6 text-orange-500" />;
       default:
         return <Users className="w-6 h-6 text-green-500" />;
     }
@@ -76,11 +76,11 @@ const TeamWall: React.FC = () => {
   const getRoleColor = (role: string) => {
     switch (role) {
       case 'Owner':
-        return 'bg-yellow-500/20 border-yellow-500/50';
+        return 'bg-red-500/20 border-yellow-500/50';
       case 'Admin':
         return 'bg-red-500/20 border-red-500/50';
       case 'Developer':
-        return 'bg-blue-500/20 border-blue-500/50';
+        return 'bg-orange-500/20 border-blue-500/50';
       default:
         return 'bg-green-500/20 border-green-500/50';
     }
