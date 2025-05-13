@@ -15,7 +15,7 @@ const TeamWall: React.FC = () => {
       uuid: "9e1bb8282f804a73930e5d463bef82da",
       description: "Gründer & Hauptentwickler",
       summary: {
-        joinDate: "März 2023",
+        joinDate: "Oktober 2024",
         specialization: "Server-Entwicklung & Community Management",
         achievements: [
           "Gründung des CyberClub Servers",
@@ -31,7 +31,7 @@ const TeamWall: React.FC = () => {
       uuid: "a796502a2f5e4bfba8a7d6628add21d8",
       description: "Server-Infrastruktur & Management",
       summary: {
-        joinDate: "März 2023",
+        joinDate: "Januar 2025",
         specialization: "Technische Infrastruktur & Sicherheit",
         achievements: [
           "Implementierung der Server-Sicherheit",
@@ -49,7 +49,7 @@ const TeamWall: React.FC = () => {
       uuid: "5ed08ed38d8c4eec9789a8779a73cf92",
       description: "Developer/Leitung",
       summary: {
-        joinDate: "April 2023",
+        joinDate: "April 2025",
         specialization: "Plugin-Entwicklung & Team Management",
         achievements: [
           "Entwicklung wichtiger Server-Plugins",
@@ -65,7 +65,7 @@ const TeamWall: React.FC = () => {
       uuid: "56e95876fef246fa8f115c14bb623231",
       description: "Moderator-Leitung",
       summary: {
-        joinDate: "Mai 2023",
+        joinDate: "Januar 2025",
         specialization: "Team-Koordination & Moderation",
         achievements: [
           "Aufbau des Moderationsteams",
@@ -81,7 +81,7 @@ const TeamWall: React.FC = () => {
       uuid: "3bf024fee85b404eb8011932306cc803",
       description: "Team Leitung",
       summary: {
-        joinDate: "Juni 2023",
+        joinDate: "Oktober 2024",
         specialization: "Team Management & Koordination",
         achievements: [
           "Organisation des Serverteams",
@@ -99,7 +99,7 @@ const TeamWall: React.FC = () => {
       uuid: "08497efa6f234ba5980348ff1a11d1af",
       description: "Plugin-Entwicklung",
       summary: {
-        joinDate: "Juli 2023",
+        joinDate: "Januar 2025",
         specialization: "Plugin-Entwicklung & Systemintegration",
         achievements: [
           "Entwicklung von Custom-Plugins",
@@ -117,7 +117,7 @@ const TeamWall: React.FC = () => {
       uuid: "71ae9f6c0b28497086579b7c53b8e9bc",
       description: "Community Moderation",
       summary: {
-        joinDate: "August 2023",
+        joinDate: "Januar 2025",
         specialization: "Community Support & Moderation",
         achievements: [
           "Aktive Spielerbetreuung",
