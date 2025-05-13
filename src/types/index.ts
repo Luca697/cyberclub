@@ -22,3 +22,16 @@ export interface ApplicationFormData {
   experience: string;
   reason: string;
 }
+
+export interface TeamMember {
+  name: string;
+  role: string;
+  uuid: string;
+  description: string;
+  summary?: {
+    joinDate: string;
+    specialization: string;
+    achievements: string[];
+    quote: string;
+  };
+}

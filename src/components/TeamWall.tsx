@@ -1,32 +1,132 @@
-import React, { useEffect, useRef } from 'react';
-import { Users, Code, Shield, Crown } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Users, Code, Shield, Crown, X } from 'lucide-react';
 import * as skinview3d from 'skinview3d';
-
-interface TeamMember {
-  name: string;
-  role: string;
-  uuid: string;
-  description: string;
-}
+import { TeamMember } from '../types';
 
 const TeamWall: React.FC = () => {
   const skinViewRefs = useRef<{ [key: string]: HTMLCanvasElement | null }>({});
+  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
 
   const teamMembers: TeamMember[] = [
     // Owners
-    { name: "CyberLucx_", role: "Owner", uuid: "9e1bb8282f804a73930e5d463bef82da", description: "Gründer & Hauptentwickler" },
-    { name: "MrJulien", role: "Owner", uuid: "a796502a2f5e4bfba8a7d6628add21d8", description: "Server-Infrastruktur & Management" },
+    {
+      name: "CyberLucx_",
+      role: "Owner",
+      uuid: "9e1bb8282f804a73930e5d463bef82da",
+      description: "Gründer & Hauptentwickler",
+      summary: {
+        joinDate: "März 2023",
+        specialization: "Server-Entwicklung & Community Management",
+        achievements: [
+          "Gründung des CyberClub Servers",
+          "Entwicklung des Custom-Plugin-Systems",
+          "Websiten Developer"
+        ],
+        quote: "Gemeinsam erschaffen wir eine einzigartige Minecraft-Erfahrung!"
+      }
+    },
+    {
+      name: "MrJulien",
+      role: "Owner",
+      uuid: "a796502a2f5e4bfba8a7d6628add21d8",
+      description: "Server-Infrastruktur & Management",
+      summary: {
+        joinDate: "März 2023",
+        specialization: "Technische Infrastruktur & Sicherheit",
+        achievements: [
+          "Implementierung der Server-Sicherheit",
+          "Optimierung der Server-Performance",
+          "Moderriert den Server"
+        ],
+        quote: "Stabilität und Sicherheit sind der Grundstein für jeden erfolgreichen Server."
+      }
+    },
     
     // Admins
-    { name: "CyberAlex0815", role: "Admin", uuid: "5ed08ed38d8c4eec9789a8779a73cf92", description: "Developer/Leitung" },
-    { name: "CyberKnightt", role: "Admin", uuid: "56e95876fef246fa8f115c14bb623231", description: "Moderator-Leitung" },
-    { name: "PinguinboyMoppi", role: "Admin", uuid: "3bf024fee85b404eb8011932306cc803", description: "Team Leitung" },
+    {
+      name: "CyberAlex0815",
+      role: "Admin",
+      uuid: "5ed08ed38d8c4eec9789a8779a73cf92",
+      description: "Developer/Leitung",
+      summary: {
+        joinDate: "April 2023",
+        specialization: "Plugin-Entwicklung & Team Management",
+        achievements: [
+          "Entwicklung wichtiger Server-Plugins",
+          "Koordination des Entwicklerteams",
+          "Implementierung neuer Features"
+        ],
+        quote: "Innovation und Qualität sind der Schlüssel zum Erfolg."
+      }
+    },
+    {
+      name: "CyberKnightt",
+      role: "Admin",
+      uuid: "56e95876fef246fa8f115c14bb623231",
+      description: "Moderator-Leitung",
+      summary: {
+        joinDate: "Mai 2023",
+        specialization: "Team-Koordination & Moderation",
+        achievements: [
+          "Aufbau des Moderationsteams",
+          "Entwicklung der Moderationsrichtlinien",
+          "Schulung neuer Moderatoren"
+        ],
+        quote: "Ein faires Spielerlebnis für alle ist unsere oberste Priorität."
+      }
+    },
+    {
+      name: "PinguinboyMoppi",
+      role: "Admin",
+      uuid: "3bf024fee85b404eb8011932306cc803",
+      description: "Team Leitung",
+      summary: {
+        joinDate: "Juni 2023",
+        specialization: "Team Management & Koordination",
+        achievements: [
+          "Organisation des Serverteams",
+          "Entwicklung von Teamstrukturen",
+          "Verbesserung der Teamkommunikation"
+        ],
+        quote: "Ein starkes Team ist das Fundament eines erfolgreichen Servers."
+      }
+    },
     
     // Developer
-    { name: "MarleyN11", role: "Developer", uuid: "08497efa6f234ba5980348ff1a11d1af", description: "Plugin-Entwicklung" },
+    {
+      name: "MarleyN11",
+      role: "Developer",
+      uuid: "08497efa6f234ba5980348ff1a11d1af",
+      description: "Plugin-Entwicklung",
+      summary: {
+        joinDate: "Juli 2023",
+        specialization: "Plugin-Entwicklung & Systemintegration",
+        achievements: [
+          "Entwicklung von Custom-Plugins",
+          "Implementierung neuer Spielmechaniken",
+          "Optimierung bestehender Systeme"
+        ],
+        quote: "Kreative Lösungen für einzigartige Spielerlebnisse."
+      }
+    },
     
     // Moderator
-    { name: "Tray_ofKill", role: "Moderator", uuid: "71ae9f6c0b28497086579b7c53b8e9bc", description: "Community Moderation" },
+    {
+      name: "Tray_ofKill",
+      role: "Moderator",
+      uuid: "71ae9f6c0b28497086579b7c53b8e9bc",
+      description: "Community Moderation",
+      summary: {
+        joinDate: "August 2023",
+        specialization: "Community Support & Moderation",
+        achievements: [
+          "Aktive Spielerbetreuung",
+          "Konfliktlösung",
+          "Unterstützung neuer Spieler"
+        ],
+        quote: "Eine freundliche und sichere Spielumgebung für alle."
+      }
+    }
   ];
 
   useEffect(() => {
@@ -40,15 +140,11 @@ const TeamWall: React.FC = () => {
           skin: `https://crafatar.com/skins/${member.uuid}`,
         });
 
-        // Animation
         skinViewer.animation = new skinview3d.WalkingAnimation();
         skinViewer.animation.speed = 0.5;
-
-        // Camera position and angle
         skinViewer.camera.position.set(15, 2, 30);
         skinViewer.controls.enableRotate = true;
 
-        // Auto-rotate
         let rotation = 0;
         const animate = () => {
           rotation += 0.01;
@@ -63,11 +159,11 @@ const TeamWall: React.FC = () => {
   const getRoleIcon = (role: string) => {
     switch (role) {
       case 'Owner':
-        return <Crown className="w-6 h-6 text-red-500" />;
+        return <Crown className="w-6 h-6 text-yellow-500" />;
       case 'Admin':
         return <Shield className="w-6 h-6 text-red-500" />;
       case 'Developer':
-        return <Code className="w-6 h-6 text-orange-500" />;
+        return <Code className="w-6 h-6 text-blue-500" />;
       default:
         return <Users className="w-6 h-6 text-green-500" />;
     }
@@ -76,11 +172,11 @@ const TeamWall: React.FC = () => {
   const getRoleColor = (role: string) => {
     switch (role) {
       case 'Owner':
-        return 'bg-red-500/20 border-yellow-500/50';
+        return 'bg-yellow-500/20 border-yellow-500/50';
       case 'Admin':
         return 'bg-red-500/20 border-red-500/50';
       case 'Developer':
-        return 'bg-orange-500/20 border-blue-500/50';
+        return 'bg-blue-500/20 border-blue-500/50';
       default:
         return 'bg-green-500/20 border-green-500/50';
     }
@@ -103,9 +199,10 @@ const TeamWall: React.FC = () => {
           {teamMembers.map((member) => (
             <div
               key={member.name}
-              className={`relative group rounded-lg p-6 border transition-all duration-300 transform hover:scale-105 ${getRoleColor(
+              className={`relative group rounded-lg p-6 border transition-all duration-300 transform hover:scale-105 cursor-pointer ${getRoleColor(
                 member.role
               )}`}
+              onClick={() => setSelectedMember(member)}
             >
               <div className="absolute -right-2 -top-2">
                 <div className="bg-zinc-800 p-2 rounded-full">
@@ -130,6 +227,62 @@ const TeamWall: React.FC = () => {
             </div>
           ))}
         </div>
+
+        {/* Member Details Modal */}
+        {selectedMember && (
+          <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+            <div className="bg-zinc-800 rounded-lg p-6 max-w-2xl w-full border border-zinc-600 animate-scaleIn relative">
+              <button
+                onClick={() => setSelectedMember(null)}
+                className="absolute right-4 top-4 text-gray-400 hover:text-white transition-colors"
+              >
+                <X size={24} />
+              </button>
+
+              <div className="flex flex-col md:flex-row gap-6">
+                <div className="md:w-1/3">
+                  <div className={`p-4 rounded-lg ${getRoleColor(selectedMember.role)}`}>
+                    <div className="flex items-center gap-2 mb-4">
+                      {getRoleIcon(selectedMember.role)}
+                      <span className="text-white font-bold">{selectedMember.role}</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-2">{selectedMember.name}</h3>
+                    <p className="text-gray-300">{selectedMember.description}</p>
+                  </div>
+                </div>
+
+                <div className="md:w-2/3">
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="text-purple-400 font-semibold mb-1">Dabei seit</h4>
+                      <p className="text-white">{selectedMember.summary?.joinDate}</p>
+                    </div>
+
+                    <div>
+                      <h4 className="text-purple-400 font-semibold mb-1">Spezialisierung</h4>
+                      <p className="text-white">{selectedMember.summary?.specialization}</p>
+                    </div>
+
+                    <div>
+                      <h4 className="text-purple-400 font-semibold mb-1">Erfolge</h4>
+                      <ul className="list-disc list-inside text-white space-y-1">
+                        {selectedMember.summary?.achievements.map((achievement, index) => (
+                          <li key={index}>{achievement}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="pt-4 border-t border-zinc-600">
+                      <blockquote className="text-gray-300 italic">
+                        "{selectedMember.summary?.quote}"
+                      </blockquote>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
