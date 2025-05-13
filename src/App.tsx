@@ -58,7 +58,7 @@ function App() {
   }, [activeSection]);
 
   return (
-    <div className="min-h-screen bg-zinc-900 text-white">
+    <div className="min-h-screen bg-zinc-900 text-white pt-28">
       <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 via-purple-500 to-yellow-500 animate-gradient-x z-50"></div>
       
       <MaintenanceOverlay config={serverConfig} />

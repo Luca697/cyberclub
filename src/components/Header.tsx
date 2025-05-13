@@ -1,14 +1,67 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Users, Activity, Newspaper, MessageSquare, Crown } from 'lucide-react';
+import { Menu, X, Users, Activity, Newspaper, MessageSquare, Crown, Clock, History } from 'lucide-react';
 
 interface HeaderProps {
   activeSection: string;
   onSectionChange: (section: string) => void;
 }
 
+interface TimeLeft {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+interface UpdateLog {
+  date: string;
+  title: string;
+  description: string;
+}
+
+const updateLogs: UpdateLog[] = [
+  {
+    date: '24.Mai.2025 13:00',
+    title: 'Server Launch',
+    description: 'CyberClub Minecraft Server geht am 24.Mai online!'
+  },
+  {
+    date: '10.03.2025',
+    title: 'Beta-Phase',
+    description: 'Start der geschlossenen Beta-Phase mit ausgewählten Spielern.'
+  },
+  {
+    date: '01.07.2024',
+    title: 'Entwicklungsstart',
+    description: 'Beginn der Serverentwicklung und Infrastrukturaufbau.'
+  }
+];
+
 const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [showUpdateLog, setShowUpdateLog] = useState(false);
+
+  const targetDate = new Date('2025-05-24T13:00:00');
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const difference = targetDate.getTime() - new Date().getTime();
+      
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60)
+        });
+      }
+    };
+
+    const timer = setInterval(calculateTimeLeft, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,71 +81,101 @@ const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange }) => {
   ];
 
   return (
-    <header 
-      className={`fixed top-1 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-zinc-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
-      }`}
-    >
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-2 group cursor-pointer">
-            <div className="relative">
-              <h1 className="text-2xl md:text-3xl font-bold text-green-500 transition-transform duration-300 group-hover:scale-110">
-                CyberClub
-              </h1>
-              <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></div>
-            </div>
-            <span className="bg-purple-600 px-2 py-0.5 text-xs rounded-md text-white animate-pulse">
-              Minecraft Server
-            </span>
+    <>
+      <div className="fixed top-1 left-0 right-0 bg-zinc-900/95 backdrop-blur-md py-2 px-4 z-50 border-b border-zinc-800">
+        <div className="container mx-auto flex justify-between items-center">
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => setShowUpdateLog(!showUpdateLog)}
+              className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors"
+            >
+              <History size={16} />
+              <span className="text-sm">Updates</span>
+            </button>
           </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
-            {sections.map((section) => {
-              const Icon = section.icon;
-              return (
-                <button
-                  key={section.id}
-                  onClick={() => onSectionChange(section.id)}
-                  className={`text-sm font-medium transition-all duration-200 flex items-center space-x-2 hover:scale-105 ${
-                    activeSection === section.id
-                      ? 'text-green-400 scale-105'
-                      : 'text-gray-300 hover:text-white'
-                  }`}
-                >
-                  <Icon size={16} />
-                  <span>{section.label}</span>
-                </button>
-              );
-            })}
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-white hover:text-green-400 transition-colors duration-200"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="flex items-center space-x-4 text-sm">
+            <Clock size={16} className="text-green-500" />
+            <div className="flex space-x-4">
+              <div className="text-center">
+                <span className="text-green-500">{timeLeft.days}</span>
+                <span className="text-gray-400 ml-1">Tage</span>
+              </div>
+              <div className="text-center">
+                <span className="text-green-500">{timeLeft.hours}</span>
+                <span className="text-gray-400 ml-1">Std</span>
+              </div>
+              <div className="text-center">
+                <span className="text-green-500">{timeLeft.minutes}</span>
+                <span className="text-gray-400 ml-1">Min</span>
+              </div>
+              <div className="text-center">
+                <span className="text-green-500">{timeLeft.seconds}</span>
+                <span className="text-gray-400 ml-1">Sek</span>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
-        {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden pt-4 pb-2 animate-slideDown">
-            <nav className="flex flex-col space-y-4">
+      {/* Update Log Modal */}
+      {showUpdateLog && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[60] p-4">
+          <div className="bg-zinc-800 rounded-lg p-6 max-w-lg w-full border border-zinc-600 animate-scaleIn">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold text-white">Update Log</h3>
+              <button
+                onClick={() => setShowUpdateLog(false)}
+                className="text-gray-400 hover:text-white"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="space-y-4 max-h-[60vh] overflow-y-auto">
+              {updateLogs.map((log, index) => (
+                <div
+                  key={index}
+                  className="border-l-2 border-green-500 pl-4 py-2"
+                >
+                  <div className="text-sm text-gray-400">{log.date}</div>
+                  <h4 className="text-white font-medium mb-1">{log.title}</h4>
+                  <p className="text-gray-300 text-sm">{log.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <header 
+        className={`fixed top-14 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled ? 'bg-zinc-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
+        }`}
+      >
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-2 group cursor-pointer">
+              <div className="relative">
+                <h1 className="text-2xl md:text-3xl font-bold text-green-500 transition-transform duration-300 group-hover:scale-110">
+                  CyberClub
+                </h1>
+                <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></div>
+              </div>
+              <span className="bg-purple-600 px-2 py-0.5 text-xs rounded-md text-white animate-pulse">
+                Minecraft Server
+              </span>
+            </div>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex space-x-8">
               {sections.map((section) => {
                 const Icon = section.icon;
                 return (
                   <button
                     key={section.id}
-                    onClick={() => {
-                      onSectionChange(section.id);
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className={`text-sm font-medium py-2 transition-all duration-200 flex items-center space-x-2 ${
+                    onClick={() => onSectionChange(section.id)}
+                    className={`text-sm font-medium transition-all duration-200 flex items-center space-x-2 hover:scale-105 ${
                       activeSection === section.id
-                        ? 'text-green-400 bg-zinc-800/50 pl-2 rounded'
+                        ? 'text-green-400 scale-105'
                         : 'text-gray-300 hover:text-white'
                     }`}
                   >
@@ -102,10 +185,46 @@ const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange }) => {
                 );
               })}
             </nav>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden text-white hover:text-green-400 transition-colors duration-200"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
-        )}
-      </div>
-    </header>
+
+          {/* Mobile Navigation */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden pt-4 pb-2 animate-slideDown">
+              <nav className="flex flex-col space-y-4">
+                {sections.map((section) => {
+                  const Icon = section.icon;
+                  return (
+                    <button
+                      key={section.id}
+                      onClick={() => {
+                        onSectionChange(section.id);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`text-sm font-medium py-2 transition-all duration-200 flex items-center space-x-2 ${
+                        activeSection === section.id
+                          ? 'text-green-400 bg-zinc-800/50 pl-2 rounded'
+                          : 'text-gray-300 hover:text-white'
+                      }`}
+                    >
+                      <Icon size={16} />
+                      <span>{section.label}</span>
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+          )}
+        </div>
+      </header>
+    </>
   );
 };
 
