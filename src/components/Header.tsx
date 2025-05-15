@@ -14,6 +14,7 @@ interface TimeLeft {
 }
 
 interface UpdateLog {
+  type: 'website' | 'server';
   date: string;
   title: string;
   description: string;
@@ -21,16 +22,31 @@ interface UpdateLog {
 
 const updateLogs: UpdateLog[] = [
   {
-    date: '24.Mai.2025 13:00',
+    type: 'server',
+    date: '24.Mai.2025',
     title: 'Server Launch',
-    description: 'CyberClub Minecraft Server geht am 24.Mai online!'
+    description: 'CyberClub Minecraft Server geht am 24.Mai online!!'
   },
   {
+    type: 'website',
+    date: '15.05.2025',
+    title: 'Website Update',
+    description: 'Neue Features auf der Website: Bewerbungssystem und Update-Log'
+  },
+  {
+    type: 'server',
     date: '10.03.2025',
     title: 'Beta-Phase',
     description: 'Start der geschlossenen Beta-Phase mit ausgewählten Spielern.'
   },
   {
+    type: 'website',
+    date: '.11.05.2025',
+    title: 'Website Launch',
+    description: 'Launch der neuen CyberClub Website mit modernem Design'
+  },
+  {
+    type: 'server',
     date: '01.07.2024',
     title: 'Entwicklungsstart',
     description: 'Beginn der Serverentwicklung und Infrastrukturaufbau.'
@@ -42,6 +58,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [showUpdateLog, setShowUpdateLog] = useState(false);
+  const [activeTab, setActiveTab] = useState<'all' | 'server' | 'website'>('all');
 
   const targetDate = new Date('2025-05-24T13:00:00');
 
@@ -78,7 +95,12 @@ const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange }) => {
     { id: 'team', label: 'Team', icon: Crown },
     { id: 'status', label: 'Server Status', icon: Activity },
     { id: 'discord', label: 'Discord', icon: MessageSquare },
+    { id: 'apply', label: 'Bewerben', icon: Users },
   ];
+
+  const filteredLogs = activeTab === 'all' 
+    ? updateLogs 
+    : updateLogs.filter(log => log.type === activeTab);
 
   return (
     <>
@@ -130,11 +152,47 @@ const Header: React.FC<HeaderProps> = ({ activeSection, onSectionChange }) => {
                 <X size={20} />
               </button>
             </div>
+
+            <div className="flex space-x-2 mb-4">
+              <button
+                onClick={() => setActiveTab('all')}
+                className={`px-3 py-1 rounded ${
+                  activeTab === 'all'
+                    ? 'bg-purple-600 text-white'
+                    : 'bg-zinc-700 text-gray-300 hover:bg-zinc-600'
+                }`}
+              >
+                Alle
+              </button>
+              <button
+                onClick={() => setActiveTab('server')}
+                className={`px-3 py-1 rounded ${
+                  activeTab === 'server'
+                    ? 'bg-green-600 text-white'
+                    : 'bg-zinc-700 text-gray-300 hover:bg-zinc-600'
+                }`}
+              >
+                Server
+              </button>
+              <button
+                onClick={() => setActiveTab('website')}
+                className={`px-3 py-1 rounded ${
+                  activeTab === 'website'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-zinc-700 text-gray-300 hover:bg-zinc-600'
+                }`}
+              >
+                Website
+              </button>
+            </div>
+
             <div className="space-y-4 max-h-[60vh] overflow-y-auto">
-              {updateLogs.map((log, index) => (
+              {filteredLogs.map((log, index) => (
                 <div
                   key={index}
-                  className="border-l-2 border-green-500 pl-4 py-2"
+                  className={`border-l-2 pl-4 py-2 ${
+                    log.type === 'server' ? 'border-green-500' : 'border-blue-500'
+                  }`}
                 >
                   <div className="text-sm text-gray-400">{log.date}</div>
                   <h4 className="text-white font-medium mb-1">{log.title}</h4>

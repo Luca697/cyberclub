@@ -6,6 +6,7 @@ import DiscordPanel from './components/DiscordPanel';
 import ServerStatusPanel from './components/ServerStatusPanel';
 import MaintenanceOverlay from './components/MaintenanceOverlay';
 import TeamWall from './components/TeamWall';
+import ApplicationPanel from './components/ApplicationPanel';
 import Footer from './components/Footer';
 import { newsItems, rankAdvantages } from './data/mockData';
 import { RankAdvantage } from './types';
@@ -34,7 +35,7 @@ function App() {
   // Update active section based on scroll position
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['news', 'ranks', 'team', 'status', 'discord'];
+      const sections = ['news', 'ranks', 'team', 'status', 'discord', 'apply'];
       const scrollPosition = window.scrollY + 200;
       
       for (const section of sections) {
@@ -70,6 +71,7 @@ function App() {
         <TeamWall />
         <ServerStatusPanel />
         <DiscordPanel />
+        <ApplicationPanel />
       </main>
       
       <Footer />

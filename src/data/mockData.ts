@@ -1,5 +1,4 @@
-import { NewsItem, RankAdvantage } from '../types';
-import { BadgeCheck, Shield, Crown, Zap } from 'lucide-react';
+import { NewsItem, RankAdvantage, RoleRequirement } from '../types';
 
 export const newsItems: NewsItem[] = [
   {
@@ -24,6 +23,7 @@ export const newsItems: NewsItem[] = [
     imageUrl: 'https://images.pexels.com/photos/7915357/pexels-photo-7915357.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
   }
 ];
+
 export const rankAdvantages: RankAdvantage[] = [
   {
     id: '1',
@@ -126,6 +126,53 @@ export const rankAdvantages: RankAdvantage[] = [
     ],
     color: '#44bd32',
     icon: 'Shield',
+  }
+];
+
+export const roleRequirements: RoleRequirement[] = [
+  {
+    role: 'Developer',
+    requirements: [
+      'Mindestens 2 Jahre Java-Entwicklungserfahrung',
+      'Erfahrung mit Spigot/Paper API',
+      'Grundkenntnisse in Git',
+      'Aktive Teilnahme an der Community',
+      'Mindestens 14 Jahre alt'
+    ],
+    description: 'Als Developer bist du für die Entwicklung und Wartung unserer Plugins und Systeme verantwortlich.'
+  },
+  {
+    role: 'Moderator',
+    requirements: [
+      'Mindestens 1 Monat aktiv auf unserem Server',
+      'Vorbildliches Verhalten in der Community',
+      'Gute Kommunikationsfähigkeiten',
+      'Mindestens 12 Jahre alt',
+      'Zeitliche Verfügbarkeit von mind. 6h/Woche'
+    ],
+    description: 'Moderatoren sind der erste Ansprechpartner für unsere Community und sorgen für ein faires Spielerlebnis.'
+  },
+  {
+    role: 'Builder',
+    requirements: [
+      'Herausragende Build-Skills in Minecraft',
+      'Portfolio mit bisherigen Bauten',
+      'Kreativität und Detailverliebtheit',
+      'Mindestens 13 Jahre alt',
+      'Erfahrung mit WorldEdit'
+    ],
+    description: 'Builder erschaffen die einzigartigen Welten und Bauwerke auf unserem Server.'
+  },
+  {
+    role: 'YouTuber',
+    requirements: [
+      'Aktiver YouTube-Kanal mit mind. 1000 Abonnenten',
+      'Regelmäßige Upload-Frequenz',
+      'Qualitativ hochwertige Produktionen',
+      'Mindestens 12 Jahre alt',
+      'Positive Ausstrahlung und Engagement'
+    ],
+    description: 'Als YouTuber repräsentierst du unseren Server nach außen und erstellst unterhaltsamen Content.'
   }
 ];
 

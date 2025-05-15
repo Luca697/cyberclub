@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
-import { Send, Check } from 'lucide-react';
-import { ApplicationFormData } from '../types';
+import { Send, Check, AlertTriangle } from 'lucide-react';
+import { ApplicationFormData, RoleRequirement } from '../types';
+import { roleRequirements } from '../data/mockData';
+
+const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1372552054920450179/0Qr7WrisPVIArFLrxcyaImNkgLDVD0zRMJkqB5RrvliKdeglnf5GISEz8CN9jBh3vmMt';
 
 const ApplicationPanel: React.FC = () => {
+  const [selectedRole, setSelectedRole] = useState<string>('');
+  const [showRequirements, setShowRequirements] = useState(false);
+  
   const initialFormData: ApplicationFormData = {
     username: '',
     age: '',
     email: '',
     experience: '',
     reason: '',
+    role: ''
   };
 
   const [formData, setFormData] = useState<ApplicationFormData>(initialFormData);
@@ -16,13 +23,18 @@ const ApplicationPanel: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof ApplicationFormData, string>>>({});
 
+  const handleRoleSelect = (role: string) => {
+    setSelectedRole(role);
+    setFormData(prev => ({ ...prev, role }));
+    setShowRequirements(true);
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     
-    // Clear error when field is edited
     if (errors[name as keyof ApplicationFormData]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
@@ -56,12 +68,51 @@ const ApplicationPanel: React.FC = () => {
     } else if (formData.reason.length < 50) {
       newErrors.reason = 'Mindestens 50 Zeichen (aktuell: ' + formData.reason.length + ')';
     }
+
+    if (!formData.role) {
+      newErrors.role = 'Bitte wähle eine Rolle aus';
+    }
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const sendToDiscord = async (formData: ApplicationFormData) => {
+    const message = {
+      embeds: [{
+        title: '🎮 Neue Bewerbung',
+        color: 0x00ff00,
+        fields: [
+          { name: '👤 Minecraft Username', value: formData.username, inline: true },
+          { name: '📅 Alter', value: formData.age, inline: true },
+          { name: '📧 E-Mail', value: formData.email, inline: true },
+          { name: '🎯 Rolle', value: formData.role, inline: true },
+          { name: '💪 Erfahrung', value: formData.experience },
+          { name: '📝 Begründung', value: formData.reason }
+        ],
+        timestamp: new Date().toISOString()
+      }]
+    };
+
+    try {
+      const response = await fetch(DISCORD_WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(message),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send to Discord');
+      }
+    } catch (error) {
+      console.error('Error sending to Discord:', error);
+      throw error;
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateForm()) {
@@ -70,19 +121,25 @@ const ApplicationPanel: React.FC = () => {
     
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      console.log('Form submitted:', formData);
-      setIsSubmitting(false);
+    try {
+      await sendToDiscord(formData);
       setIsSubmitted(true);
       
-      // Reset form after 5 seconds
       setTimeout(() => {
         setIsSubmitted(false);
         setFormData(initialFormData);
+        setSelectedRole('');
+        setShowRequirements(false);
       }, 5000);
-    }, 1500);
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      // Handle error appropriately
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const selectedRoleRequirements = roleRequirements.find(r => r.role === selectedRole);
 
   return (
     <section
@@ -90,15 +147,51 @@ const ApplicationPanel: React.FC = () => {
       className="min-h-screen py-24 px-4 flex items-center bg-gradient-to-b from-zinc-900 to-zinc-800"
     >
       <div className="container mx-auto">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             <span className="text-yellow-500">Bewirb</span> dich
           </h2>
           <div className="h-1 w-24 bg-yellow-500 mb-6"></div>
           <p className="text-gray-300 mb-8">
-            Wir freuen uns immer über neue Mitglieder in unserer Community! Fülle das Formular aus, 
-            um dich für unseren Minecraft-Server zu bewerben.
+            Wir suchen motivierte Teammitglieder! Wähle eine Position und zeig uns, was du drauf hast.
           </p>
+
+          {/* Role Selection */}
+          {!selectedRole && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              {roleRequirements.map((role) => (
+                <div
+                  key={role.role}
+                  onClick={() => handleRoleSelect(role.role)}
+                  className="bg-zinc-800/60 rounded-lg p-6 border border-zinc-700 hover:border-yellow-500/50 transition-all duration-300 cursor-pointer transform hover:scale-105"
+                >
+                  <h3 className="text-xl font-bold text-white mb-2">{role.role}</h3>
+                  <p className="text-gray-300 text-sm">{role.description}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Requirements Modal */}
+          {showRequirements && selectedRoleRequirements && (
+            <div className="bg-zinc-800/80 border border-yellow-500/30 rounded-lg p-6 mb-8">
+              <div className="flex items-start mb-4">
+                <AlertTriangle className="text-yellow-500 mr-2 flex-shrink-0 mt-1" size={20} />
+                <div>
+                  <h3 className="text-lg font-bold text-white">Voraussetzungen für {selectedRoleRequirements.role}</h3>
+                  <p className="text-gray-300 text-sm">{selectedRoleRequirements.description}</p>
+                </div>
+              </div>
+              <ul className="space-y-2">
+                {selectedRoleRequirements.requirements.map((req, index) => (
+                  <li key={index} className="flex items-center text-gray-300">
+                    <span className="text-yellow-500 mr-2">•</span>
+                    {req}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {isSubmitted ? (
             <div className="bg-green-500/20 border border-green-500 rounded-lg p-6 animate-fadeIn">
@@ -115,7 +208,7 @@ const ApplicationPanel: React.FC = () => {
                 und uns per E-Mail bei dir melden.
               </p>
             </div>
-          ) : (
+          ) : selectedRole && (
             <form 
               onSubmit={handleSubmit}
               className="bg-zinc-800/60 rounded-lg p-6 border border-zinc-700 shadow-xl animate-fadeIn"
@@ -184,7 +277,7 @@ const ApplicationPanel: React.FC = () => {
                 
                 <div>
                   <label className="block text-gray-300 mb-2" htmlFor="experience">
-                    Minecraft-Erfahrung
+                    Erfahrung
                   </label>
                   <select
                     id="experience"
@@ -209,7 +302,7 @@ const ApplicationPanel: React.FC = () => {
               
               <div className="mb-6">
                 <label className="block text-gray-300 mb-2" htmlFor="reason">
-                  Warum möchtest du unserem Server beitreten?
+                  Warum möchtest du {selectedRole} werden?
                 </label>
                 <textarea
                   id="reason"
@@ -220,7 +313,7 @@ const ApplicationPanel: React.FC = () => {
                   className={`w-full bg-zinc-700 rounded px-4 py-2 text-white border ${
                     errors.reason ? 'border-red-500' : 'border-zinc-600'
                   } focus:outline-none focus:ring-2 focus:ring-yellow-500`}
-                  placeholder="Erzähle uns etwas über dich und warum du unserem Server beitreten möchtest..."
+                  placeholder="Erzähle uns etwas über dich und warum du dich für diese Position bewirbst..."
                 ></textarea>
                 {errors.reason && (
                   <p className="text-red-500 text-sm mt-1">{errors.reason}</p>
@@ -230,11 +323,23 @@ const ApplicationPanel: React.FC = () => {
                 </div>
               </div>
               
-              <div className="text-center">
+              <div className="flex justify-between items-center">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedRole('');
+                    setShowRequirements(false);
+                    setFormData(initialFormData);
+                  }}
+                  className="px-6 py-3 bg-zinc-700 hover:bg-zinc-600 text-white rounded-lg transition-all duration-300"
+                >
+                  Zurück
+                </button>
+                
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 ${
+                  className={`px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 ${
                     isSubmitting ? 'opacity-75 cursor-not-allowed' : ''
                   }`}
                 >

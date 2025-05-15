@@ -21,6 +21,7 @@ export interface ApplicationFormData {
   email: string;
   experience: string;
   reason: string;
+  role: string;
 }
 
 export interface TeamMember {
@@ -34,4 +35,10 @@ export interface TeamMember {
     achievements: string[];
     quote: string;
   };
+}
+
+export interface RoleRequirement {
+  role: string;
+  requirements: string[];
+  description: string;
 }
