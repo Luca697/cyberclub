@@ -3,19 +3,22 @@ import { Send, Check, AlertTriangle } from 'lucide-react';
 import { ApplicationFormData, RoleRequirement } from '../types';
 import { roleRequirements } from '../data/mockData';
 
-const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1372552054920450179/0Qr7WrisPVIArFLrxcyaImNkgLDVD0zRMJkqB5RrvliKdeglnf5GISEz8CN9jBh3vmMt';
+const BASE64_WEBHOOK_URL =
+  'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMyODM2NDMzMzYxMjQwNDgwNi8wZWlMTDFRc0RkODV4MkR2S2h5ZWFHbFIybGNvckV4QkZCRWhyTU9IeWtWRXViVDNteTRrNGRnZF81SHRaXzN0ZkR0ZQ==';
+
+const decodeBase64 = (base64: string) => atob(base64);
 
 const ApplicationPanel: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<string>('');
   const [showRequirements, setShowRequirements] = useState(false);
-  
+
   const initialFormData: ApplicationFormData = {
     username: '',
     age: '',
     email: '',
     experience: '',
     reason: '',
-    role: ''
+    role: '',
   };
 
   const [formData, setFormData] = useState<ApplicationFormData>(initialFormData);
@@ -25,7 +28,7 @@ const ApplicationPanel: React.FC = () => {
 
   const handleRoleSelect = (role: string) => {
     setSelectedRole(role);
-    setFormData(prev => ({ ...prev, role }));
+    setFormData((prev) => ({ ...prev, role }));
     setShowRequirements(true);
   };
 
@@ -34,7 +37,7 @@ const ApplicationPanel: React.FC = () => {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    
+
     if (errors[name as keyof ApplicationFormData]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
@@ -42,89 +45,75 @@ const ApplicationPanel: React.FC = () => {
 
   const validateForm = (): boolean => {
     const newErrors: Partial<Record<keyof ApplicationFormData, string>> = {};
-    
-    if (!formData.username.trim()) {
-      newErrors.username = 'Benutzername wird benötigt';
-    }
-    
+
+    if (!formData.username.trim()) newErrors.username = 'Benutzername wird benötigt';
     if (!formData.age.trim()) {
       newErrors.age = 'Alter wird benötigt';
     } else if (isNaN(Number(formData.age)) || Number(formData.age) < 10) {
       newErrors.age = 'Gültiges Alter eingeben (min. 10)';
     }
-    
     if (!formData.email.trim()) {
       newErrors.email = 'E-Mail wird benötigt';
     } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
       newErrors.email = 'Gültige E-Mail eingeben';
     }
-    
-    if (!formData.experience.trim()) {
-      newErrors.experience = 'Erfahrung wird benötigt';
-    }
-    
+    if (!formData.experience.trim()) newErrors.experience = 'Erfahrung wird benötigt';
     if (!formData.reason.trim()) {
       newErrors.reason = 'Grund wird benötigt';
     } else if (formData.reason.length < 50) {
-      newErrors.reason = 'Mindestens 50 Zeichen (aktuell: ' + formData.reason.length + ')';
+      newErrors.reason = `Mindestens 50 Zeichen (aktuell: ${formData.reason.length})`;
     }
+    if (!formData.role) newErrors.role = 'Bitte wähle eine Rolle aus';
 
-    if (!formData.role) {
-      newErrors.role = 'Bitte wähle eine Rolle aus';
-    }
-    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const sendToDiscord = async (formData: ApplicationFormData) => {
+    const webhookUrl = decodeBase64(BASE64_WEBHOOK_URL);
+
     const message = {
-      embeds: [{
-        title: '🎮 Neue Bewerbung',
-        color: 0x00ff00,
-        fields: [
-          { name: '👤 Minecraft Username', value: formData.username, inline: true },
-          { name: '📅 Alter', value: formData.age, inline: true },
-          { name: '📧 E-Mail', value: formData.email, inline: true },
-          { name: '🎯 Rolle', value: formData.role, inline: true },
-          { name: '💪 Erfahrung', value: formData.experience },
-          { name: '📝 Begründung', value: formData.reason }
-        ],
-        timestamp: new Date().toISOString()
-      }]
+      embeds: [
+        {
+          title: '🎮 Neue Bewerbung',
+          color: 0x00ff00,
+          fields: [
+            { name: '👤 Minecraft Username', value: formData.username, inline: true },
+            { name: '📅 Alter', value: formData.age, inline: true },
+            { name: '📧 E-Mail', value: formData.email, inline: true },
+            { name: '🎯 Rolle', value: formData.role, inline: true },
+            { name: '💪 Erfahrung', value: formData.experience },
+            { name: '📝 Begründung', value: formData.reason },
+          ],
+          timestamp: new Date().toISOString(),
+        },
+      ],
     };
 
     try {
-      const response = await fetch(DISCORD_WEBHOOK_URL, {
+      const response = await fetch(webhookUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(message),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to send to Discord');
+        throw new Error('Fehler beim Senden an Discord');
       }
     } catch (error) {
-      console.error('Error sending to Discord:', error);
+      console.error('Discord Fehler:', error);
       throw error;
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-    
+    if (!validateForm()) return;
+
     setIsSubmitting(true);
-    
     try {
       await sendToDiscord(formData);
       setIsSubmitted(true);
-      
       setTimeout(() => {
         setIsSubmitted(false);
         setFormData(initialFormData);
@@ -132,8 +121,7 @@ const ApplicationPanel: React.FC = () => {
         setShowRequirements(false);
       }, 5000);
     } catch (error) {
-      console.error('Error submitting application:', error);
-      // Handle error appropriately
+      console.error('Fehler beim Absenden:', error);
     } finally {
       setIsSubmitting(false);
     }
