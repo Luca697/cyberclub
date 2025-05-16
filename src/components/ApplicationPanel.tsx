@@ -15,7 +15,7 @@ const ApplicationPanel: React.FC = () => {
   const initialFormData: ApplicationFormData = {
     username: '',
     age: '',
-    email: '',
+    discord: '',
     experience: '',
     reason: '',
     role: '',
@@ -52,10 +52,10 @@ const ApplicationPanel: React.FC = () => {
     } else if (isNaN(Number(formData.age)) || Number(formData.age) < 10) {
       newErrors.age = 'Gültiges Alter eingeben (min. 10)';
     }
-    if (!formData.email.trim()) {
-      newErrors.email = 'E-Mail wird benötigt';
-    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-      newErrors.email = 'Gültige E-Mail eingeben';
+    if (!formData.discord.trim()) {
+      newErrors.discord = 'Discord-Name wird benötigt';
+    } else if (!/^.+?#\d{4}$/.test(formData.discord)) {
+      newErrors.discord = 'Bitte gib einen gültigen Discord-Namen ein (z. B. Nutzer#1234)';
     }
     if (!formData.experience.trim()) newErrors.experience = 'Erfahrung wird benötigt';
     if (!formData.reason.trim()) {
@@ -80,7 +80,7 @@ const ApplicationPanel: React.FC = () => {
           fields: [
             { name: '👤 Minecraft Username', value: formData.username, inline: true },
             { name: '📅 Alter', value: formData.age, inline: true },
-            { name: '📧 E-Mail', value: formData.email, inline: true },
+            { name: '💬 Discord-Name', value: formData.discord, inline: true },
             { name: '🎯 Rolle', value: formData.role, inline: true },
             { name: '💪 Erfahrung', value: formData.experience },
             { name: '📝 Begründung', value: formData.reason },
@@ -193,7 +193,7 @@ const ApplicationPanel: React.FC = () => {
               </h3>
               <p className="text-gray-300 text-center">
                 Vielen Dank für deine Bewerbung. Wir werden diese so schnell wie möglich prüfen 
-                und uns per E-Mail bei dir melden.
+                und uns über Discord bei dir melden.
               </p>
             </div>
           ) : selectedRole && (
@@ -221,7 +221,7 @@ const ApplicationPanel: React.FC = () => {
                     <p className="text-red-500 text-sm mt-1">{errors.username}</p>
                   )}
                 </div>
-                
+
                 <div>
                   <label className="block text-gray-300 mb-2" htmlFor="age">
                     Alter
@@ -242,27 +242,27 @@ const ApplicationPanel: React.FC = () => {
                     <p className="text-red-500 text-sm mt-1">{errors.age}</p>
                   )}
                 </div>
-                
+
                 <div>
-                  <label className="block text-gray-300 mb-2" htmlFor="email">
-                    E-Mail
+                  <label className="block text-gray-300 mb-2" htmlFor="discord">
+                    Discord-Name
                   </label>
                   <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
+                    type="text"
+                    id="discord"
+                    name="discord"
+                    value={formData.discord}
                     onChange={handleChange}
                     className={`w-full bg-zinc-700 rounded px-4 py-2 text-white border ${
-                      errors.email ? 'border-red-500' : 'border-zinc-600'
+                      errors.discord ? 'border-red-500' : 'border-zinc-600'
                     } focus:outline-none focus:ring-2 focus:ring-yellow-500`}
-                    placeholder="deine@email.de"
+                    placeholder="z. B. Nutzer#1234"
                   />
-                  {errors.email && (
-                    <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                  {errors.discord && (
+                    <p className="text-red-500 text-sm mt-1">{errors.discord}</p>
                   )}
                 </div>
-                
+
                 <div>
                   <label className="block text-gray-300 mb-2" htmlFor="experience">
                     Erfahrung
@@ -287,7 +287,7 @@ const ApplicationPanel: React.FC = () => {
                   )}
                 </div>
               </div>
-              
+
               <div className="mb-6">
                 <label className="block text-gray-300 mb-2" htmlFor="reason">
                   Warum möchtest du {selectedRole} werden?
@@ -310,7 +310,7 @@ const ApplicationPanel: React.FC = () => {
                   {formData.reason.length}/50 Zeichen (Minimum)
                 </div>
               </div>
-              
+
               <div className="flex justify-between items-center">
                 <button
                   type="button"
@@ -323,7 +323,7 @@ const ApplicationPanel: React.FC = () => {
                 >
                   Zurück
                 </button>
-                
+
                 <button
                   type="submit"
                   disabled={isSubmitting}
