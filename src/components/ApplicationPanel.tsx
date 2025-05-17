@@ -3,22 +3,19 @@ import { Send, Check, AlertTriangle } from 'lucide-react';
 import { ApplicationFormData, RoleRequirement } from '../types';
 import { roleRequirements } from '../data/mockData';
 
-const BASE64_WEBHOOK_URL =
-  'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMyODM2NDMzMzYxMjQwNDgwNi8wZWlMTDFRc0RkODV4MkR2S2h5ZWFHbFIybGNvckV4QkZCRWhyTU9IeWtWRXViVDNteTRrNGRnZF81SHRaXzN0ZkR0ZQ==';
-
-const decodeBase64 = (base64: string) => atob(base64);
+const DISCORD_WEBHOOK_URL = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMyODM2NDMzMzYxMjQwNDgwNi8wZWlMTDFRc0RkODV4MkR2S2h5ZWFHbFIybGNvckV4QkZCRWhyTU9IeWtWRXViVDNteTRrNGRnZF81SHRaXzN0ZkR0ZQ==';
 
 const ApplicationPanel: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<string>('');
   const [showRequirements, setShowRequirements] = useState(false);
-
+  
   const initialFormData: ApplicationFormData = {
     username: '',
     age: '',
     discord: '',
     experience: '',
     reason: '',
-    role: '',
+    role: ''
   };
 
   const [formData, setFormData] = useState<ApplicationFormData>(initialFormData);
@@ -28,7 +25,7 @@ const ApplicationPanel: React.FC = () => {
 
   const handleRoleSelect = (role: string) => {
     setSelectedRole(role);
-    setFormData((prev) => ({ ...prev, role }));
+    setFormData(prev => ({ ...prev, role }));
     setShowRequirements(true);
   };
 
@@ -37,7 +34,7 @@ const ApplicationPanel: React.FC = () => {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-
+    
     if (errors[name as keyof ApplicationFormData]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
@@ -45,75 +42,92 @@ const ApplicationPanel: React.FC = () => {
 
   const validateForm = (): boolean => {
     const newErrors: Partial<Record<keyof ApplicationFormData, string>> = {};
-
-    if (!formData.username.trim()) newErrors.username = 'Benutzername wird benötigt';
+    
+    if (!formData.username.trim()) {
+      newErrors.username = 'Benutzername wird benötigt';
+    }
+    
     if (!formData.age.trim()) {
       newErrors.age = 'Alter wird benötigt';
     } else if (isNaN(Number(formData.age)) || Number(formData.age) < 10) {
       newErrors.age = 'Gültiges Alter eingeben (min. 10)';
     }
+    
     if (!formData.discord.trim()) {
-      newErrors.discord = 'Discord-Name wird benötigt';
-    } else if (!/^.+?#\d{4}$/.test(formData.discord)) {
-      newErrors.discord = 'Bitte gib einen gültigen Discord-Namen ein (z. B. Nutzer#1234)';
+      newErrors.discord = 'Nutzer123 wird benötigt';
     }
-    if (!formData.experience.trim()) newErrors.experience = 'Erfahrung wird benötigt';
+    
+    if (!formData.experience.trim()) {
+      newErrors.experience = 'Erfahrung wird benötigt';
+    }
+    
     if (!formData.reason.trim()) {
       newErrors.reason = 'Grund wird benötigt';
     } else if (formData.reason.length < 50) {
-      newErrors.reason = `Mindestens 50 Zeichen (aktuell: ${formData.reason.length})`;
+      newErrors.reason = 'Mindestens 50 Zeichen (aktuell: ' + formData.reason.length + ')';
     }
-    if (!formData.role) newErrors.role = 'Bitte wähle eine Rolle aus';
 
+    if (!formData.role) {
+      newErrors.role = 'Bitte wähle eine Rolle aus';
+    }
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const sendToDiscord = async (formData: ApplicationFormData) => {
-    const webhookUrl = decodeBase64(BASE64_WEBHOOK_URL);
+    const messageContent = JSON.stringify({
+      embeds: [{
+        title: '🎮 Neue Bewerbung',
+        color: 0x00ff00,
+        fields: [
+          { name: '👤 Minecraft Username', value: formData.username, inline: true },
+          { name: '📅 Alter', value: formData.age, inline: true },
+          { name: '🎮 Nutzer123', value: formData.discord, inline: true },
+          { name: '🎯 Rolle', value: formData.role, inline: true },
+          { name: '💪 Erfahrung', value: formData.experience },
+          { name: '📝 Begründung', value: formData.reason }
+        ],
+        timestamp: new Date().toISOString()
+      }]
+    });
 
-    const message = {
-      embeds: [
-        {
-          title: '🎮 Neue Bewerbung',
-          color: 0x00ff00,
-          fields: [
-            { name: '👤 Minecraft Username', value: formData.username, inline: true },
-            { name: '📅 Alter', value: formData.age, inline: true },
-            { name: '💬 Discord-Name', value: formData.discord, inline: true },
-            { name: '🎯 Rolle', value: formData.role, inline: true },
-            { name: '💪 Erfahrung', value: formData.experience },
-            { name: '📝 Begründung', value: formData.reason },
-          ],
-          timestamp: new Date().toISOString(),
-        },
-      ],
-    };
+    const base64Message = btoa(messageContent);
 
     try {
-      const response = await fetch(webhookUrl, {
+      const response = await fetch(DISCORD_WEBHOOK_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(message),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'application',
+          data: base64Message
+        }),
       });
 
       if (!response.ok) {
-        throw new Error('Fehler beim Senden an Discord');
+        throw new Error('Failed to send to Discord');
       }
     } catch (error) {
-      console.error('Discord Fehler:', error);
+      console.error('Error sending to Discord:', error);
       throw error;
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateForm()) return;
-
+    
+    if (!validateForm()) {
+      return;
+    }
+    
     setIsSubmitting(true);
+    
     try {
       await sendToDiscord(formData);
       setIsSubmitted(true);
+      
       setTimeout(() => {
         setIsSubmitted(false);
         setFormData(initialFormData);
@@ -121,7 +135,8 @@ const ApplicationPanel: React.FC = () => {
         setShowRequirements(false);
       }, 5000);
     } catch (error) {
-      console.error('Fehler beim Absenden:', error);
+      console.error('Error submitting application:', error);
+      // Handle error appropriately
     } finally {
       setIsSubmitting(false);
     }
@@ -221,7 +236,7 @@ const ApplicationPanel: React.FC = () => {
                     <p className="text-red-500 text-sm mt-1">{errors.username}</p>
                   )}
                 </div>
-
+                
                 <div>
                   <label className="block text-gray-300 mb-2" htmlFor="age">
                     Alter
@@ -242,10 +257,10 @@ const ApplicationPanel: React.FC = () => {
                     <p className="text-red-500 text-sm mt-1">{errors.age}</p>
                   )}
                 </div>
-
+                
                 <div>
                   <label className="block text-gray-300 mb-2" htmlFor="discord">
-                    Discord-Name
+                    Nutzer123
                   </label>
                   <input
                     type="text"
@@ -256,13 +271,13 @@ const ApplicationPanel: React.FC = () => {
                     className={`w-full bg-zinc-700 rounded px-4 py-2 text-white border ${
                       errors.discord ? 'border-red-500' : 'border-zinc-600'
                     } focus:outline-none focus:ring-2 focus:ring-yellow-500`}
-                    placeholder="z. B. Nutzer#1234"
+                    placeholder="Dein Nutzer123"
                   />
                   {errors.discord && (
                     <p className="text-red-500 text-sm mt-1">{errors.discord}</p>
                   )}
                 </div>
-
+                
                 <div>
                   <label className="block text-gray-300 mb-2" htmlFor="experience">
                     Erfahrung
@@ -287,7 +302,7 @@ const ApplicationPanel: React.FC = () => {
                   )}
                 </div>
               </div>
-
+              
               <div className="mb-6">
                 <label className="block text-gray-300 mb-2" htmlFor="reason">
                   Warum möchtest du {selectedRole} werden?
@@ -310,7 +325,7 @@ const ApplicationPanel: React.FC = () => {
                   {formData.reason.length}/50 Zeichen (Minimum)
                 </div>
               </div>
-
+              
               <div className="flex justify-between items-center">
                 <button
                   type="button"
@@ -323,7 +338,7 @@ const ApplicationPanel: React.FC = () => {
                 >
                   Zurück
                 </button>
-
+                
                 <button
                   type="submit"
                   disabled={isSubmitting}
