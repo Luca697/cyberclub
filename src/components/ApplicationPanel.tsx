@@ -54,7 +54,7 @@ const ApplicationPanel: React.FC = () => {
     }
     
     if (!formData.discord.trim()) {
-      newErrors.discord = 'Nutzer123 wird benötigt';
+      newErrors.discord = 'Discord Name wird benötigt';
     }
     
     if (!formData.experience.trim()) {
@@ -78,21 +78,24 @@ const ApplicationPanel: React.FC = () => {
   const sendToDiscord = async (formData: ApplicationFormData) => {
     const messageContent = {
       embeds: [{
-        title: '🎮 Neue Bewerbung',
+        title: 'Neue Bewerbung',
         color: 0x00ff00,
         fields: [
-          { name: '👤 Minecraft Username', value: formData.username, inline: true },
-          { name: '📅 Alter', value: formData.age, inline: true },
-          { name: '🎮 Nutzer123', value: formData.discord, inline: true },
-          { name: '🎯 Rolle', value: formData.role, inline: true },
-          { name: '💪 Erfahrung', value: formData.experience },
-          { name: '📝 Begründung', value: formData.reason }
+          { name: 'Minecraft Username', value: formData.username, inline: true },
+          { name: 'Alter', value: formData.age, inline: true },
+          { name: 'Nutzer123', value: formData.discord, inline: true },
+          { name: 'Rolle', value: formData.role, inline: true },
+          { name: 'Erfahrung', value: formData.experience },
+          { name: 'Begründung', value: formData.reason }
         ],
         timestamp: new Date().toISOString()
       }]
     };
 
     try {
+      // Convert the string to UTF-8 then to base64
+      const base64Message = btoa(unescape(encodeURIComponent(JSON.stringify(messageContent))));
+      
       const response = await fetch(DISCORD_WEBHOOK_URL, {
         method: 'POST',
         headers: {
@@ -100,7 +103,7 @@ const ApplicationPanel: React.FC = () => {
         },
         body: JSON.stringify({
           type: 'application',
-          data: btoa(JSON.stringify(messageContent))
+          data: base64Message
         }),
       });
 
@@ -258,7 +261,7 @@ const ApplicationPanel: React.FC = () => {
                 
                 <div>
                   <label className="block text-gray-300 mb-2" htmlFor="discord">
-                    Nutzer123
+                    Your Discord Name
                   </label>
                   <input
                     type="text"
@@ -269,7 +272,7 @@ const ApplicationPanel: React.FC = () => {
                     className={`w-full bg-zinc-700 rounded px-4 py-2 text-white border ${
                       errors.discord ? 'border-red-500' : 'border-zinc-600'
                     } focus:outline-none focus:ring-2 focus:ring-yellow-500`}
-                    placeholder="Dein Nutzer123"
+                    placeholder="Dein Discord Name"
                   />
                   {errors.discord && (
                     <p className="text-red-500 text-sm mt-1">{errors.discord}</p>
