@@ -3,7 +3,7 @@ import { Send, Check, AlertTriangle } from 'lucide-react';
 import { ApplicationFormData, RoleRequirement } from '../types';
 import { roleRequirements } from '../data/mockData';
 
-const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1328364333612404806/0eiLL1QsDd85x2DvKhyeaGlR2lcorExBFBEhrMOHykVEubT3my4k4dgd_5HtZ_3tfDte';
+const DISCORD_WEBHOOK_URL = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMyODM2NDMzMzYxMjQwNDgwNi8wZWlMTDFRc0RkODV4MkR2S2h5ZWFHbFIybGNvckV4QkZCRWhyTU9IeWtWRXViVDNteTRrNGRnZF81SHRaXzN0ZkR0ZQ==';
 
 const ApplicationPanel: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<string>('');
@@ -76,7 +76,7 @@ const ApplicationPanel: React.FC = () => {
   };
 
   const sendToDiscord = async (formData: ApplicationFormData) => {
-    const messageContent = JSON.stringify({
+    const messageContent = {
       embeds: [{
         title: '🎮 Neue Bewerbung',
         color: 0x00ff00,
@@ -90,9 +90,7 @@ const ApplicationPanel: React.FC = () => {
         ],
         timestamp: new Date().toISOString()
       }]
-    });
-
-    const base64Message = btoa(messageContent);
+    };
 
     try {
       const response = await fetch(DISCORD_WEBHOOK_URL, {
@@ -102,7 +100,7 @@ const ApplicationPanel: React.FC = () => {
         },
         body: JSON.stringify({
           type: 'application',
-          data: base64Message
+          data: btoa(JSON.stringify(messageContent))
         }),
       });
 
