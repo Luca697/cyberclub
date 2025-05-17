@@ -3,7 +3,7 @@ import { Send, Check, AlertTriangle } from 'lucide-react';
 import { ApplicationFormData, RoleRequirement } from '../types';
 import { roleRequirements } from '../data/mockData';
 
-const DISCORD_WEBHOOK_URL = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMyODM2NDMzMzYxMjQwNDgwNi8wZWlMTDFRc0RkODV4MkR2S2h5ZWFHbFIybGNvckV4QkZCRWhyTU9IeWtWRXViVDNteTRrNGRnZF81SHRaXzN0ZkR0ZQ==';
+const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1328364333612404806/0eiLL1QsDd85x2DvKhyeaGlR2lcorExBFBEhrMOHykVEubT3my4k4dgd_5HtZ_3tfDte';
 
 const ApplicationPanel: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<string>('');
