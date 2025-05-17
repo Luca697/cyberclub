@@ -3,7 +3,7 @@ import { NewsItem, RankAdvantage, RoleRequirement } from '../types';
 export const newsItems: NewsItem[] = [
   {
     id: '1',
-    title: 'Unser Release: 24.Mai.2025 ',
+    title: 'Unser Release: 24.Mai.2026 ',
     content: 'Bald wird der Server das 2te mal Released!!',
     date: '24.Mai.2025',
     imageUrl: 'https://cdn.pixabay.com/photo/2022/01/05/15/30/minecraft-6917341_1280.jpg'
