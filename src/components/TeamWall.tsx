@@ -15,12 +15,12 @@ const TeamWall: React.FC = () => {
       uuid: "9e1bb8282f804a73930e5d463bef82da",
       description: "Gründer & Hauptentwickler",
       summary: {
-        joinDate: "Oktober 2024",
+        joinDate: "März 2024",
         specialization: "Server-Entwicklung & Community Management",
         achievements: [
           "Gründung des CyberClub Servers",
           "Entwicklung des Custom-Plugin-Systems",
-          "Websiten Developer"
+          "Aufbau der Server-Infrastruktur"
         ],
         quote: "Gemeinsam erschaffen wir eine einzigartige Minecraft-Erfahrung!"
       }
@@ -31,34 +31,36 @@ const TeamWall: React.FC = () => {
       uuid: "a796502a2f5e4bfba8a7d6628add21d8",
       description: "Server-Infrastruktur & Management",
       summary: {
-        joinDate: "Januar 2025",
+        joinDate: "Januar 2024",
         specialization: "Technische Infrastruktur & Sicherheit",
         achievements: [
           "Implementierung der Server-Sicherheit",
           "Optimierung der Server-Performance",
-          "Moderriert den Server"
+          "Entwicklung des Backup-Systems"
         ],
         quote: "Stabilität und Sicherheit sind der Grundstein für jeden erfolgreichen Server."
       }
     },
     
-    // Admins
+    // Manager
     {
       name: "CyberAlex0815",
-      role: "Admin",
+      role: "Manager",
       uuid: "5ed08ed38d8c4eec9789a8779a73cf92",
-      description: "Developer/Leitung",
+      description: "Server Management & Development",
       summary: {
-        joinDate: "April 2025",
-        specialization: "Plugin-Entwicklung & Team Management",
+        joinDate: "März 2024",
+        specialization: "Server Management & Plugin-Entwicklung",
         achievements: [
-          "Entwicklung wichtiger Server-Plugins",
-          "Koordination des Entwicklerteams",
-          "Implementierung neuer Features"
+          "Leitung des Server-Managements",
+          "Koordination der Entwicklungsteams",
+          "Strategische Serverentwicklung"
         ],
-        quote: "Innovation und Qualität sind der Schlüssel zum Erfolg."
+        quote: "Innovation und effektives Management sind der Schlüssel zum Erfolg."
       }
     },
+    
+    // Admins
     {
       name: "CyberKnightt",
       role: "Admin",
@@ -81,7 +83,7 @@ const TeamWall: React.FC = () => {
       uuid: "3bf024fee85b404eb8011932306cc803",
       description: "Team Leitung",
       summary: {
-        joinDate: "Oktober 2024",
+        joinDate: "Januar 2025",
         specialization: "Team Management & Koordination",
         achievements: [
           "Organisation des Serverteams",
@@ -99,7 +101,7 @@ const TeamWall: React.FC = () => {
       uuid: "08497efa6f234ba5980348ff1a11d1af",
       description: "Plugin-Entwicklung",
       summary: {
-        joinDate: "Januar 2025",
+        joinDate: "Juli 2024",
         specialization: "Plugin-Entwicklung & Systemintegration",
         achievements: [
           "Entwicklung von Custom-Plugins",
@@ -110,21 +112,39 @@ const TeamWall: React.FC = () => {
       }
     },
     
-    // Moderator
+    // Sr. Moderator
     {
       name: "Tray_ofKill",
-      role: "Moderator",
+      role: "Sr.Moderator",
       uuid: "71ae9f6c0b28497086579b7c53b8e9bc",
-      description: "Community Moderation",
+      description: "Senior Community Moderation",
       summary: {
-        joinDate: "Januar 2025",
+        joinDate: "Janaur 2025",
         specialization: "Community Support & Moderation",
         achievements: [
-          "Aktive Spielerbetreuung",
-          "Konfliktlösung",
-          "Unterstützung neuer Spieler"
+          "Leitung des Moderationsteams",
+          "Entwicklung von Moderationsrichtlinien",
+          "Mentoring neuer Moderatoren"
         ],
         quote: "Eine freundliche und sichere Spielumgebung für alle."
+      }
+    },
+    
+    // Moderator
+    {
+      name: "zQuapzZ",
+      role: "Moderator",
+      uuid: "ea57f4f496f5499ca05c3e43a864dcbf",
+      description: "Community Moderation",
+      summary: {
+        joinDate: "März 2024",
+        specialization: "Community Support & Spielerbetreuung",
+        achievements: [
+          "Aktive Spielerunterstützung",
+          "Community-Events Organisation",
+          "Konfliktmanagement"
+        ],
+        quote: "Gemeinsam machen wir CyberClub zu einem besseren Ort."
       }
     }
   ];
@@ -160,10 +180,14 @@ const TeamWall: React.FC = () => {
     switch (role) {
       case 'Owner':
         return <Crown className="w-6 h-6 text-yellow-500" />;
+      case 'Manager':
+        return <Crown className="w-6 h-6 text-orange-500" />;
       case 'Admin':
         return <Shield className="w-6 h-6 text-red-500" />;
       case 'Developer':
         return <Code className="w-6 h-6 text-blue-500" />;
+      case 'Sr. Moderator':
+        return <Shield className="w-6 h-6 text-purple-500" />;
       default:
         return <Users className="w-6 h-6 text-green-500" />;
     }
@@ -173,10 +197,14 @@ const TeamWall: React.FC = () => {
     switch (role) {
       case 'Owner':
         return 'bg-yellow-500/20 border-yellow-500/50';
+      case 'Manager':
+        return 'bg-orange-500/20 border-orange-500/50';
       case 'Admin':
         return 'bg-red-500/20 border-red-500/50';
       case 'Developer':
         return 'bg-blue-500/20 border-blue-500/50';
+      case 'Sr. Moderator':
+        return 'bg-purple-500/20 border-purple-500/50';
       default:
         return 'bg-green-500/20 border-green-500/50';
     }
