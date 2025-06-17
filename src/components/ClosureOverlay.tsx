@@ -59,7 +59,7 @@ const ClosureOverlay: React.FC = () => {
   ];
 
   const serverStats = [
-    { icon: Users, label: "Registrierte Spieler", value: "260, color: "text-green-400", description: "Aus über 1 Land" },
+    { icon: Users, label: "Registrierte Spieler", value: "60", color: "text-green-400", description: "Aus über 1 Land" },
     { icon: Clock, label: "Gespielte Stunden", value: "15,392", color: "text-blue-400", description: "Das sind 641 Tage!" },
     { icon: MessageSquare, label: "Chat-Nachrichten", value: "89,234", color: "text-purple-400", description: "Voller Freude und Lachen" },
     { icon: Trophy, label: "Events veranstaltet", value: "47", color: "text-yellow-400", description: "Jedes einzigartig und besonders" },
@@ -98,7 +98,7 @@ const ClosureOverlay: React.FC = () => {
     },
     {
       title: "Das finale Gruppenfoto",
-      description: "Alle Teammitglieder und über 30vSpieler versammelten sich für ein letztes gemeinsames Bild.",
+      description: "Alle Teammitglieder und über 30 Spieler versammelten sich für ein letztes gemeinsames Bild.",
       icon: Users,
       date: "Oktober 2024",
       highlight: "Ein Moment für die Ewigkeit"
@@ -252,7 +252,7 @@ const ClosureOverlay: React.FC = () => {
               </p>
               <p className="text-lg text-gray-400 leading-relaxed mb-6">
                 Was als Vision zweier Träumer begann, wurde zu einer lebendigen Community 
-                von fast 3.000 Spielern aus über 1-3 Ländern. Obwohl unser Server nun offline geht, 
+                von fast 26 Spielern aus über 1-3 Ländern. Obwohl unser Server nun offline geht, 
                 bleiben die Erinnerungen und Freundschaften für immer bestehen.
               </p>
               <div className="flex justify-center items-center space-x-4 mt-8">
