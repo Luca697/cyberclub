@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Users, Calendar, Star, ArrowRight, Trophy, MessageSquare, Code, Crown, Shield, Camera, Music, Gamepad2, Award, Clock, MapPin, Zap, Sparkles, Gift, Flame, Target } from 'lucide-react';
+import { Heart, Users, Calendar, Star, ArrowRight, Trophy, MessageSquare, Code, Crown, Shield, Camera, Music, Gamepad2, Award, Clock, MapPin, Zap, Sparkles, Gift, Flame, Target, ExternalLink } from 'lucide-react';
 
 const ClosureOverlay: React.FC = () => {
   const [showContent, setShowContent] = useState(false);
@@ -54,12 +54,12 @@ const ClosureOverlay: React.FC = () => {
     { icon: Code, text: "April 2024 - Entwicklungsphase", color: "text-blue-400", description: "Server-Infrastruktur und Plugins entwickelt" },
     { icon: Users, text: "Mai 2024 - Community wächst", color: "text-purple-400", description: "Erste 500 Spieler schließen sich an" },
     { icon: Trophy, text: "Juni-August 2024 - Goldene Zeit", color: "text-yellow-400", description: "Events, Builds und unvergessliche Momente" },
-    { icon: Star, text: "September 2024 - Höhepunkt", color: "text-orange-400", description: "Peak von 2.847 registrierten Spielern" },
-    { icon: Heart, text: "Oktober 2024 - Würdiger Abschluss", color: "text-red-400", description: "Ein Ende voller Dankbarkeit und Liebe" }
+    { icon: Star, text: "Februar 2024 - Höhepunkt", color: "text-orange-400", description: "Peak von 30 registrierten Spielern" },
+    { icon: Heart, text: "Juni 2025 - Würdiger Abschluss", color: "text-red-400", description: "Ein Ende voller Dankbarkeit und Liebe" }
   ];
 
   const serverStats = [
-    { icon: Users, label: "Registrierte Spieler", value: "2,847", color: "text-green-400", description: "Aus über 15 Ländern" },
+    { icon: Users, label: "Registrierte Spieler", value: "260, color: "text-green-400", description: "Aus über 1 Land" },
     { icon: Clock, label: "Gespielte Stunden", value: "15,392", color: "text-blue-400", description: "Das sind 641 Tage!" },
     { icon: MessageSquare, label: "Chat-Nachrichten", value: "89,234", color: "text-purple-400", description: "Voller Freude und Lachen" },
     { icon: Trophy, label: "Events veranstaltet", value: "47", color: "text-yellow-400", description: "Jedes einzigartig und besonders" },
@@ -70,7 +70,7 @@ const ClosureOverlay: React.FC = () => {
   const memories = [
     {
       title: "Das erste große Build-Event",
-      description: "Über 100 Spieler bauten gemeinsam an der majestätischen Spawn-Stadt. 72 Stunden pure Kreativität und Teamwork.",
+      description: "Über 16 Spieler bauten gemeinsam an der majestätischen Spawn-Stadt. 72 Stunden pure Kreativität und Teamwork.",
       icon: Camera,
       date: "Mai 2024",
       highlight: "Rekord: 127 gleichzeitige Spieler"
@@ -98,7 +98,7 @@ const ClosureOverlay: React.FC = () => {
     },
     {
       title: "Das finale Gruppenfoto",
-      description: "Alle Teammitglieder und über 200 Spieler versammelten sich für ein letztes gemeinsames Bild.",
+      description: "Alle Teammitglieder und über 30vSpieler versammelten sich für ein letztes gemeinsames Bild.",
       icon: Users,
       date: "Oktober 2024",
       highlight: "Ein Moment für die Ewigkeit"
@@ -108,7 +108,7 @@ const ClosureOverlay: React.FC = () => {
   const communityAchievements = [
     {
       title: "Größtes Bauwerk",
-      description: "Die Himmelsburg - 500 Blöcke hoch, gebaut von 50+ Spielern",
+      description: "Die Himmelsburg - 500 Blöcke hoch, gebaut von 10+ Spielern",
       icon: Crown,
       builder: "Team Skybuilders"
     },
@@ -126,7 +126,7 @@ const ClosureOverlay: React.FC = () => {
     },
     {
       title: "Hilfsbereitester Spieler",
-      description: "Über 200 neuen Spielern beim Einstieg geholfen",
+      description: "Über 30 neuen Spielern beim Einstieg geholfen",
       icon: Heart,
       builder: "HelpingHand_99"
     }
@@ -150,10 +150,25 @@ const ClosureOverlay: React.FC = () => {
     "\"Gemeinsame Erinnerungen sind unsterblich.\" - Das CyberClub Team"
   ];
 
+  const DiscordButton = ({ className = "", children, size = "default" }: { className?: string, children: React.ReactNode, size?: "default" | "large" }) => (
+    <a
+      href="https://discord.gg/Bde6Az8ZgS"
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`inline-flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg ${
+        size === "large" ? "px-8 py-4 text-lg" : "px-6 py-3"
+      } ${className}`}
+    >
+      <MessageSquare size={size === "large" ? 24 : 20} />
+      <span>{children}</span>
+      <ExternalLink size={16} />
+    </a>
+  );
+
   return (
-    <div className="fixed inset-0 bg-gradient-to-br from-zinc-900 via-purple-900/20 to-zinc-900 z-[100] overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-purple-900/20 to-zinc-900 overflow-x-hidden">
       {/* Enhanced Background Particles */}
-      <div className="absolute inset-0">
+      <div className="fixed inset-0 pointer-events-none">
         {[...Array(150)].map((_, i) => (
           <div
             key={i}
@@ -171,17 +186,17 @@ const ClosureOverlay: React.FC = () => {
       </div>
 
       {/* Multiple Gradient Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-      <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-yellow-500/15 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-      <div className="absolute top-3/4 left-1/3 w-80 h-80 bg-red-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '3s' }}></div>
+      <div className="fixed top-1/4 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
+      <div className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-3xl animate-pulse pointer-events-none" style={{ animationDelay: '1s' }}></div>
+      <div className="fixed top-1/2 left-1/2 w-64 h-64 bg-yellow-500/15 rounded-full blur-2xl animate-pulse pointer-events-none" style={{ animationDelay: '2s' }}></div>
+      <div className="fixed top-3/4 left-1/3 w-80 h-80 bg-red-500/15 rounded-full blur-3xl animate-pulse pointer-events-none" style={{ animationDelay: '3s' }}></div>
 
-      <div className="relative z-10 min-h-screen overflow-y-auto">
+      <div className="relative z-10">
         <div className={`max-w-6xl mx-auto p-4 transition-all duration-1000 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           
           {/* Main Logo Section */}
-          <div className="text-center py-16 animate-scaleIn">
-            <div className="relative">
+          <div className="text-center py-16 animate-scaleIn min-h-screen flex flex-col justify-center">
+            <div className="relative mb-8">
               <h1 className="text-6xl md:text-8xl font-bold mb-4">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-purple-500 to-yellow-500 animate-gradient-x">
                   CyberClub
@@ -195,8 +210,21 @@ const ClosureOverlay: React.FC = () => {
               </div>
             </div>
             <div className="h-1 w-32 bg-gradient-to-r from-green-500 via-purple-500 to-yellow-500 mx-auto animate-gradient-x mb-6"></div>
-            <p className="text-xl text-gray-400">März 2024 - Oktober 2024</p>
-            <p className="text-lg text-purple-400 mt-2">7 Monate • Unendliche Erinnerungen</p>
+            <p className="text-xl text-gray-400 mb-2">März 2024 - Juni 2025</p>
+            <p className="text-lg text-purple-400 mb-8">7 Monate • Unendliche Erinnerungen</p>
+            
+            {/* Discord Button in Hero */}
+            <div className="mb-8">
+              <DiscordButton size="large">Tritt unserem Discord bei</DiscordButton>
+            </div>
+            
+            {/* Scroll Indicator */}
+            <div className="animate-bounce mt-12">
+              <div className="w-6 h-10 border-2 border-gray-400 rounded-full mx-auto">
+                <div className="w-1 h-3 bg-gray-400 rounded-full mx-auto mt-2 animate-pulse"></div>
+              </div>
+              <p className="text-gray-400 text-sm mt-2">Scrolle für mehr</p>
+            </div>
           </div>
 
           {/* Inspirational Quote Carousel */}
@@ -216,7 +244,7 @@ const ClosureOverlay: React.FC = () => {
               Das Ende einer <span className="text-purple-400">unvergesslichen Reise</span>
             </h2>
             
-            <div className="bg-zinc-800/60 backdrop-blur-md rounded-2xl p-8 border border-zinc-700/50 shadow-2xl animate-fadeIn max-w-4xl mx-auto" style={{ animationDelay: '1s' }}>
+            <div className="bg-zinc-800/60 backdrop-blur-md rounded-2xl p-8 border border-zinc-700/50 shadow-2xl animate-fadeIn max-w-4xl mx-auto mb-8" style={{ animationDelay: '1s' }}>
               <p className="text-xl md:text-2xl text-gray-300 leading-relaxed mb-6">
                 Nach <span className="text-green-400 font-bold">7 unvergesslichen Monaten</span> voller 
                 Abenteuer, Freundschaften und gemeinsamer Erlebnisse ist es Zeit, 
@@ -224,7 +252,7 @@ const ClosureOverlay: React.FC = () => {
               </p>
               <p className="text-lg text-gray-400 leading-relaxed mb-6">
                 Was als Vision zweier Träumer begann, wurde zu einer lebendigen Community 
-                von fast 3.000 Spielern aus über 15 Ländern. Obwohl unser Server nun offline geht, 
+                von fast 3.000 Spielern aus über 1-3 Ländern. Obwohl unser Server nun offline geht, 
                 bleiben die Erinnerungen und Freundschaften für immer bestehen.
               </p>
               <div className="flex justify-center items-center space-x-4 mt-8">
@@ -232,6 +260,12 @@ const ClosureOverlay: React.FC = () => {
                 <span className="text-orange-400 font-medium">Eine Legende endet, aber die Geschichte lebt weiter</span>
                 <Flame className="text-orange-400 animate-pulse" size={24} />
               </div>
+            </div>
+
+            {/* Discord CTA */}
+            <div className="text-center">
+              <p className="text-gray-300 mb-4">Bleib mit der Community in Verbindung:</p>
+              <DiscordButton>Unserem Discord beitreten</DiscordButton>
             </div>
           </div>
 
@@ -398,7 +432,7 @@ const ClosureOverlay: React.FC = () => {
                 jeder Streamer und jeder, der auch nur einen Moment Teil dieser Reise war - 
                 ihr habt CyberClub zu etwas ganz Besonderem gemacht.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8 mb-8">
                 <div className="text-center">
                   <MessageSquare className="text-purple-400 mx-auto mb-2" size={32} />
                   <p className="text-white font-medium">Für jeden Chat</p>
@@ -420,9 +454,15 @@ const ClosureOverlay: React.FC = () => {
                   <p className="text-gray-400 text-sm">den wir zusammen geteilt haben</p>
                 </div>
               </div>
-              <p className="text-purple-400 font-medium text-xl mt-8">
+              <p className="text-purple-400 font-medium text-xl mb-6">
                 Die Erinnerungen bleiben. Die Freundschaften bestehen weiter. ❤️
               </p>
+              
+              {/* Discord CTA in Thank You Section */}
+              <div className="bg-indigo-500/20 rounded-lg p-6 border border-indigo-500/30">
+                <p className="text-white text-lg mb-4">Lass uns in Kontakt bleiben!</p>
+                <DiscordButton>Discord Community beitreten</DiscordButton>
+              </div>
             </div>
           </div>
 
@@ -441,11 +481,18 @@ const ClosureOverlay: React.FC = () => {
                 </p>
                 <p className="text-gray-400">- Das CyberClub Legacy</p>
               </div>
-              <div className="flex items-center justify-center space-x-3 text-green-400 text-lg">
+              <div className="flex items-center justify-center space-x-3 text-green-400 text-lg mb-8">
                 <Zap size={20} className="animate-pulse" />
                 <span className="font-medium">Bis zum nächsten Abenteuer, CyberClub Familie!</span>
                 <ArrowRight size={20} className="animate-pulse" />
               </div>
+              
+              {/* Final Discord CTA */}
+              <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-lg p-6 border border-indigo-500/30">
+                <p className="text-white text-lg mb-4">Wir sehen uns auf Discord! 🎮</p>
+                <DiscordButton size="large">Zur CyberClub Discord Community</DiscordButton>
+              </div>
+              
               <p className="text-gray-500 text-sm mt-6">
                 "Manche Geschichten enden nicht wirklich, sie leben in den Herzen derer weiter, die sie erlebt haben."
               </p>
@@ -453,7 +500,7 @@ const ClosureOverlay: React.FC = () => {
           </div>
 
           {/* Floating Hearts and Stars Animation */}
-          <div className="absolute inset-0 pointer-events-none">
+          <div className="fixed inset-0 pointer-events-none">
             {[...Array(30)].map((_, i) => (
               <Heart
                 key={`heart-${i}`}
@@ -483,9 +530,6 @@ const ClosureOverlay: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Bottom Fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-zinc-900 to-transparent"></div>
     </div>
   );
 };
