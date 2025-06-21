@@ -100,14 +100,14 @@ const RanksPanel: React.FC<RanksPanelProps> = ({ ranks, onUpdateRanks }) => {
               key={rank.id}
               className="group relative bg-slate-800/40 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-purple-500/50 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl"
               style={{
-                boxShadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px ${rank.color}20,
-                animationDelay: ${index * 0.1}s
+                boxShadow: `0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px ${rank.color}20`,
+                animationDelay: `${index * 0.1}s`
               }}
             >
               {/* Glow Effect */}
               <div 
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
-                style={{ backgroundColor: ${rank.color}20 }}
+                style={{ backgroundColor: `${rank.color}20` }}
               ></div>
 
               <div className="relative z-10">
@@ -123,9 +123,9 @@ const RanksPanel: React.FC<RanksPanelProps> = ({ ranks, onUpdateRanks }) => {
                 <div className="text-center mb-6">
                   <div
                     className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4 relative"
-                    style={{ backgroundColor: ${rank.color}20, color: rank.color }}
+                    style={{ backgroundColor: `${rank.color}20`, color: rank.color }}
                   >
-                    <div className="absolute inset-0 rounded-2xl animate-pulse" style={{ backgroundColor: ${rank.color}10 }}></div>
+                    <div className="absolute inset-0 rounded-2xl animate-pulse" style={{ backgroundColor: `${rank.color}10` }}></div>
                     <div className="relative">
                       {getIconComponent(rank.icon)}
                     </div>
@@ -155,7 +155,7 @@ const RanksPanel: React.FC<RanksPanelProps> = ({ ranks, onUpdateRanks }) => {
                   <div className="flex items-center justify-center">
                     <div 
                       className="px-4 py-2 rounded-full text-xs font-bold text-white"
-                      style={{ backgroundColor: ${rank.color}40, border: 1px solid ${rank.color}60 }}
+                      style={{ backgroundColor: `${rank.color}40`, border: `1px solid ${rank.color}60` }}
                     >
                       <Star size={12} className="inline mr-1" />
                       {rank.name.toUpperCase()}
