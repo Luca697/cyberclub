@@ -75,7 +75,7 @@ const HeroSection: React.FC = () => {
                   <Users className="text-purple-400" size={32} />
                 </div>
               </div>
-              <div className="text-3xl font-bold text-white mb-2">60</div>
+              <div className="text-3xl font-bold text-white mb-2">2,847</div>
               <div className="text-gray-400">Registrierte Spieler</div>
             </div>
 
@@ -119,7 +119,7 @@ const HeroSection: React.FC = () => {
           <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10 max-w-md mx-auto mb-12">
             <p className="text-gray-400 mb-2">Server IP:</p>
             <div className="flex items-center justify-center space-x-2">
-              <code className="text-2xl font-mono text-green-400 font-bold">cyberclub24.de</code>
+              <code className="text-2xl font-mono text-green-400 font-bold">cyberclub.de</code>
               <button className="bg-green-500/20 hover:bg-green-500/30 p-2 rounded-lg transition-colors duration-200">
                 <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
