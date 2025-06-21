@@ -118,7 +118,7 @@ const Footer: React.FC = () => {
               <p className="text-gray-400 mb-2">Server IP:</p>
               <div className="flex items-center space-x-4">
                 <code className="text-2xl font-mono text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-400 font-bold">
-                  cyberclub24.de
+                  cyberclub.de
                 </code>
                 <button className="bg-green-500/20 hover:bg-green-500/30 p-2 rounded-lg transition-all duration-200 border border-green-500/30 group">
                   <svg className="w-5 h-5 text-green-400 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
