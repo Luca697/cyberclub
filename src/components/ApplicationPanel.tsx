@@ -3,7 +3,7 @@ import { Send, Check, AlertTriangle } from 'lucide-react';
 import { ApplicationFormData, RoleRequirement } from '../types';
 import { roleRequirements } from '../data/mockData';
 
-const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1328364333612404806/0eiLL1QsDd85x2DvKhyeaGlR2lcorExBFBEhrMOHykVEubT3my4k4dgd_5HtZ_3tfDte';
+const DISCORD_WEBHOOK_URL = import.meta.env.VITE_DISCORD_WEBHOOK_URL;
 
 const ApplicationPanel: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<string>('');
@@ -54,7 +54,7 @@ const ApplicationPanel: React.FC = () => {
     }
     
     if (!formData.discord.trim()) {
-      newErrors.discord = 'Discord Name wird benötigt';
+      newErrors.discord = 'Nutzer123 wird benötigt';
     }
     
     if (!formData.experience.trim()) {
@@ -76,6 +76,10 @@ const ApplicationPanel: React.FC = () => {
   };
 
   const sendToDiscord = async (formData: ApplicationFormData) => {
+    if (!DISCORD_WEBHOOK_URL) {
+      throw new Error('Discord webhook URL is not configured');
+    }
+
     const messageContent = {
       embeds: [{
         title: 'Neue Bewerbung',
@@ -261,7 +265,7 @@ const ApplicationPanel: React.FC = () => {
                 
                 <div>
                   <label className="block text-gray-300 mb-2" htmlFor="discord">
-                    Dein Discord Name
+                    Nutzer123
                   </label>
                   <input
                     type="text"
@@ -272,7 +276,7 @@ const ApplicationPanel: React.FC = () => {
                     className={`w-full bg-zinc-700 rounded px-4 py-2 text-white border ${
                       errors.discord ? 'border-red-500' : 'border-zinc-600'
                     } focus:outline-none focus:ring-2 focus:ring-yellow-500`}
-                    placeholder="Dein Discord Name"
+                    placeholder="Dein Nutzer123"
                   />
                   {errors.discord && (
                     <p className="text-red-500 text-sm mt-1">{errors.discord}</p>
