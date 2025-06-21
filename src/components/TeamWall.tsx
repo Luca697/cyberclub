@@ -31,7 +31,7 @@ const TeamWall: React.FC = () => {
       uuid: "a796502a2f5e4bfba8a7d6628add21d8",
       description: "Server-Infrastruktur & Management",
       summary: {
-        joinDate: "Januar 2024",
+        joinDate: "März 2024",
         specialization: "Technische Infrastruktur & Sicherheit",
         achievements: [
           "Implementierung der Server-Sicherheit",
@@ -49,7 +49,7 @@ const TeamWall: React.FC = () => {
       uuid: "5ed08ed38d8c4eec9789a8779a73cf92",
       description: "Server Management & Development",
       summary: {
-        joinDate: "März 2024",
+        joinDate: "April 2025",
         specialization: "Server Management & Plugin-Entwicklung",
         achievements: [
           "Leitung des Server-Managements",
@@ -67,7 +67,7 @@ const TeamWall: React.FC = () => {
       uuid: "56e95876fef246fa8f115c14bb623231",
       description: "Moderator-Leitung",
       summary: {
-        joinDate: "Januar 2025",
+        joinDate: "Mai 2025",
         specialization: "Team-Koordination & Moderation",
         achievements: [
           "Aufbau des Moderationsteams",
@@ -83,7 +83,7 @@ const TeamWall: React.FC = () => {
       uuid: "3bf024fee85b404eb8011932306cc803",
       description: "Team Leitung",
       summary: {
-        joinDate: "Januar 2025",
+        joinDate: "Juni 2024",
         specialization: "Team Management & Koordination",
         achievements: [
           "Organisation des Serverteams",
@@ -101,7 +101,7 @@ const TeamWall: React.FC = () => {
       uuid: "08497efa6f234ba5980348ff1a11d1af",
       description: "Plugin-Entwicklung",
       summary: {
-        joinDate: "Juli 2024",
+        joinDate: "April 2025",
         specialization: "Plugin-Entwicklung & Systemintegration",
         achievements: [
           "Entwicklung von Custom-Plugins",
@@ -115,11 +115,11 @@ const TeamWall: React.FC = () => {
     // Sr. Moderator
     {
       name: "Tray_ofKill",
-      role: "Sr.Moderator",
+      role: "Sr. Moderator",
       uuid: "71ae9f6c0b28497086579b7c53b8e9bc",
       description: "Senior Community Moderation",
       summary: {
-        joinDate: "Janaur 2025",
+        joinDate: "Februar 2024",
         specialization: "Community Support & Moderation",
         achievements: [
           "Leitung des Moderationsteams",
@@ -134,10 +134,10 @@ const TeamWall: React.FC = () => {
     {
       name: "zQuapzZ",
       role: "Moderator",
-      uuid: "ea57f4f496f5499ca05c3e43a864dcbf",
+      uuid: "d8f5871eb37f4461b5c36da2c8f26c21",
       description: "Community Moderation",
       summary: {
-        joinDate: "März 2024",
+        joinDate: "Mai 2024",
         specialization: "Community Support & Spielerbetreuung",
         achievements: [
           "Aktive Spielerunterstützung",
