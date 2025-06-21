@@ -1,76 +1,155 @@
 import React from 'react';
+import { Heart, Code, Zap, ExternalLink } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-zinc-900 border-t border-zinc-800 py-8 px-4">
-      <div className="container mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-6 md:mb-0">
-            <div className="flex items-center">
-              <h2 className="text-xl font-bold text-green-500 mr-2">
+    <footer className="relative bg-slate-900/80 backdrop-blur-md border-t border-white/10 py-16 px-4 overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="container mx-auto relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+          
+          {/* Brand Section */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center space-x-3 mb-6">
+              <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
                 CyberClub
               </h2>
-              <span className="bg-purple-600 px-2 py-0.5 text-xs rounded-md text-white">
+              <span className="bg-gradient-to-r from-purple-600 to-cyan-600 px-3 py-1 text-xs rounded-full text-white font-medium">
                 Minecraft Server
               </span>
             </div>
-            <p className="text-gray-400 text-sm mt-2">
-              Erstellt von CyberLucx_
+            <p className="text-gray-400 text-lg leading-relaxed mb-6 max-w-md">
+              Der beste Ort für dein Minecraft-Abenteuer. Eine Community voller Kreativität, 
+              Freundschaft und unvergesslicher Momente.
             </p>
+            <div className="flex items-center space-x-2 text-sm text-gray-500">
+              <span>Made with</span>
+              <Heart className="text-red-400 animate-pulse" size={16} />
+              <span>by the CyberClub Team</span>
+            </div>
           </div>
 
-          <div className="flex flex-col items-center md:items-end">
-            <div className="flex space-x-4 mb-4">
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors duration-200"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                </svg>
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors duration-200"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84 0 0 0 .497 -3.753C20.18 7.773 21.692 5.25 22 4.009z"></path>
-                </svg>
-              </a>
-              <a
-                href="https://discord.gg/P4bQ8Jcx"
-                className="text-gray-400 hover:text-white transition-colors duration-200"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="12" y1="16" x2="12" y2="12"></line>
-                  <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors duration-200"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-              </a>
-            </div>
-            <p className="text-gray-500 text-sm">
-              &copy; {currentYear} CyberClub. Alle Rechte vorbehalten.
-            </p>
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-white font-bold text-lg mb-6">Quick Links</h3>
+            <ul className="space-y-3">
+              <li>
+                <a href="#hero" className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center group">
+                  <span>Home</span>
+                  <Zap size={14} className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </a>
+              </li>
+              <li>
+                <a href="#news" className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center group">
+                  <span>News</span>
+                  <Zap size={14} className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </a>
+              </li>
+              <li>
+                <a href="#ranks" className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center group">
+                  <span>Ränge</span>
+                  <Zap size={14} className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </a>
+              </li>
+              <li>
+                <a href="#team" className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center group">
+                  <span>Team</span>
+                  <Zap size={14} className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </a>
+              </li>
+              <li>
+                <a href="#apply" className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center group">
+                  <span>Bewerben</span>
+                  <Zap size={14} className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Community */}
+          <div>
+            <h3 className="text-white font-bold text-lg mb-6">Community</h3>
+            <ul className="space-y-3">
+              <li>
+                <a
+                  href="https://discord.gg/Bde6Az8ZgS"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-indigo-400 transition-colors duration-200 flex items-center group"
+                >
+                  <span>Discord Server</span>
+                  <ExternalLink size={14} className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors duration-200 flex items-center group">
+                  <span>Twitter</span>
+                  <ExternalLink size={14} className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-400 hover:text-red-400 transition-colors duration-200 flex items-center group">
+                  <span>YouTube</span>
+                  <ExternalLink size={14} className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-400 hover:text-pink-400 transition-colors duration-200 flex items-center group">
+                  <span>Instagram</span>
+                  <ExternalLink size={14} className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-zinc-800 text-center text-gray-500 text-xs">
-          <p>
-            CyberClub ist nicht mit Mojang verbunden und wird nicht von Mojang unterstützt.
-            Minecraft ist eine Marke von Mojang AB.
-          </p>
+        {/* Server IP Section */}
+        <div className="bg-slate-800/40 backdrop-blur-sm rounded-2xl p-8 border border-white/10 mb-12">
+          <div className="text-center">
+            <h3 className="text-white font-bold text-xl mb-4">Verbinde dich mit unserem Server</h3>
+            <div className="bg-black/40 backdrop-blur-sm rounded-xl p-6 border border-white/20 inline-block">
+              <p className="text-gray-400 mb-2">Server IP:</p>
+              <div className="flex items-center space-x-4">
+                <code className="text-2xl font-mono text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-400 font-bold">
+                  cyberclub24.de
+                </code>
+                <button className="bg-green-500/20 hover:bg-green-500/30 p-2 rounded-lg transition-all duration-200 border border-green-500/30 group">
+                  <svg className="w-5 h-5 text-green-400 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10">
+          <div className="flex items-center space-x-4 mb-6 md:mb-0">
+            <div className="flex items-center space-x-2">
+              <Code className="text-purple-400" size={16} />
+              <span className="text-gray-400 text-sm">
+                Powered by React & TypeScript
+              </span>
+            </div>
+          </div>
+
+          <div className="text-center md:text-right">
+            <p className="text-gray-500 text-sm mb-2">
+              &copy; {currentYear} CyberClub. Alle Rechte vorbehalten.
+            </p>
+            <p className="text-gray-600 text-xs">
+              CyberClub ist nicht mit Mojang verbunden und wird nicht von Mojang unterstützt.
+              Minecraft ist eine Marke von Mojang AB.
+            </p>
+          </div>
         </div>
       </div>
     </footer>
