@@ -17,19 +17,19 @@ export const defaultConfig: ServerConfig = {
   // - 'online' für Online
   // - 'offline' für Offline  
   // - 'maintenance' für Wartung
-  serverStatus: 'online',
+  serverStatus: 'true',
   
   // Die Nachricht die angezeigt wird wenn der Server in Wartung ist
   maintenanceMessage: 'Unser Server wird aktuell gewartet. Wir installieren neue Features und Verbesserungen für ein noch besseres Spielerlebnis!',
   
   // Optional: Geschätzte Dauer der Wartung
-  estimatedDuration: '1-3 Stunden',
+  estimatedDuration: 'Sonntag 9-10 Uhr',
   
   // Optional: Grund für die Wartung
   maintenanceReason: 'Server-Updates & Performance-Optimierungen',
   
   // Optional: Fortschritt der Wartung (0-100)
-  progressPercentage: 65
+  progressPercentage: 50
 };
 
 let currentConfig: ServerConfig = { ...defaultConfig };
