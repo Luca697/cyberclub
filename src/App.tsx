@@ -8,12 +8,15 @@ import ServerStatusPanel from './components/ServerStatusPanel';
 import DiscordPanel from './components/DiscordPanel';
 import ApplicationPanel from './components/ApplicationPanel';
 import Footer from './components/Footer';
+import MaintenanceOverlay from './components/MaintenanceOverlay';
 import { newsItems, rankAdvantages } from './data/mockData';
+import { getServerConfig } from './config/serverConfig';
 import './styles/animations.css';
 
 function App() {
   const [activeSection, setActiveSection] = useState('hero');
   const [ranks, setRanks] = useState(rankAdvantages);
+  const [serverConfig, setServerConfig] = useState(getServerConfig());
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,6 +39,15 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Refresh server config every 30 seconds
+  useEffect(() => {
+    const configInterval = setInterval(() => {
+      setServerConfig(getServerConfig());
+    }, 30000);
+
+    return () => clearInterval(configInterval);
+  }, []);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -45,40 +57,48 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
-      {/* Animated Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-500/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-green-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }}></div>
-      </div>
+      {/* Maintenance Overlay */}
+      <MaintenanceOverlay config={serverConfig} />
 
-      {/* Floating Particles */}
-      <div className="fixed inset-0 pointer-events-none">
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-white/20 rounded-full animate-float"
-            style={{
-              left: Math.random() * 100 + '%',
-              top: Math.random() * 100 + '%',
-              animationDelay: Math.random() * 10 + 's',
-              animationDuration: Math.random() * 20 + 10 + 's',
-            }}
-          />
-        ))}
-      </div>
+      {/* Main Website Content */}
+      {!serverConfig.maintenance && (
+        <>
+          {/* Animated Background */}
+          <div className="fixed inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/30 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-500/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-green-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }}></div>
+          </div>
 
-      <div className="relative z-10">
-        <Header activeSection={activeSection} onSectionChange={scrollToSection} />
-        <HeroSection />
-        <NewsPanel news={newsItems} />
-        <RanksPanel ranks={ranks} onUpdateRanks={setRanks} />
-        <TeamWall />
-        <ServerStatusPanel />
-        <DiscordPanel />
-        <ApplicationPanel />
-        <Footer />
-      </div>
+          {/* Floating Particles */}
+          <div className="fixed inset-0 pointer-events-none">
+            {[...Array(50)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1 h-1 bg-white/20 rounded-full animate-float"
+                style={{
+                  left: Math.random() * 100 + '%',
+                  top: Math.random() * 100 + '%',
+                  animationDelay: Math.random() * 10 + 's',
+                  animationDuration: Math.random() * 20 + 10 + 's',
+                }}
+              />
+            ))}
+          </div>
+
+          <div className="relative z-10">
+            <Header activeSection={activeSection} onSectionChange={scrollToSection} />
+            <HeroSection />
+            <NewsPanel news={newsItems} />
+            <RanksPanel ranks={ranks} onUpdateRanks={setRanks} />
+            <TeamWall />
+            <ServerStatusPanel />
+            <DiscordPanel />
+            <ApplicationPanel />
+            <Footer />
+          </div>
+        </>
+      )}
     </div>
   );
 }
