@@ -7,7 +7,7 @@ export interface ServerConfig {
 // Hier kannst du den Server-Status direkt ändern
 export const defaultConfig: ServerConfig = {
   // Ändere maintenance auf true wenn der Server in Wartung ist
-  maintenance: false,
+  maintenance: true,
   
   // Ändere den serverStatus zu:
   // - 'online' für Online
